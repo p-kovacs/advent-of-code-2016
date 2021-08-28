@@ -14,7 +14,7 @@ public class Tile {
     public final int row;
     public final int col;
 
-    private Tile(int row, int col) {
+    public Tile(int row, int col) {
         this.row = row;
         this.col = col;
     }

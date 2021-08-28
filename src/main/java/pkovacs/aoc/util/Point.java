@@ -18,6 +18,10 @@ public class Point {
         this.coordinates = coordinates;
     }
 
+    public static Point of(int... coordinates) {
+        return new Point(coordinates);
+    }
+
     public int dim() {
         return coordinates.length;
     }

@@ -22,6 +22,14 @@ public class Vector {
         this(v.x, v.y);
     }
 
+    public static Vector of(long x, long y) {
+        return new Vector(x, y);
+    }
+
+    public static Vector of(Vector v) {
+        return new Vector(v.x, v.y);
+    }
+
     public void set(long x, long y) {
         this.x = x;
         this.y = y;

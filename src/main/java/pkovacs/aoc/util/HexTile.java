@@ -14,7 +14,7 @@ public class HexTile {
     public final int row;
     public final int col;
 
-    private HexTile(int row, int col) {
+    public HexTile(int row, int col) {
         this.col = col;
         this.row = row;
     }
