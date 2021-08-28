@@ -1,7 +1,6 @@
 package pkovacs.aoc.y2016;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import pkovacs.aoc.util.InputUtils;
 import pkovacs.aoc.util.Vector;
