@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+sourceCompatibility = 11
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'com.google.guava:guava:30.1-jre'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task run(type: JavaExec) {
+    main = getClassName(project.findProperty('day'))
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+def getClassName(day) {
+    if (!day) {
+        return null
+    }
+    'pkovacs.aoc.Day' + (day.length() == 1 ? "0${day}" : day)
+}
