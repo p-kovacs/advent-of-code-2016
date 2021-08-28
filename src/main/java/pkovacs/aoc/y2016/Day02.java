@@ -22,7 +22,7 @@ public class Day02 {
                 .findFirst()
                 .get().getKey();
 
-        StringBuilder code = new StringBuilder();
+        var code = new StringBuilder();
         for (String line : lines) {
             for (int i = 0; i < line.length(); i++) {
                 char ch = line.charAt(i);
@@ -46,7 +46,7 @@ public class Day02 {
     }
 
     private static Map<Tile, Character> initBoard1() {
-        Map<Tile, Character> board = new HashMap<>();
+        var board = new HashMap<Tile, Character>();
         board.put(Tile.of(0, 0), '1');
         board.put(Tile.of(0, 1), '2');
         board.put(Tile.of(0, 2), '3');

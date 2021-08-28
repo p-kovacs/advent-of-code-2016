@@ -10,13 +10,13 @@ public class Day01 {
 
     public static void main(String[] args) {
         var lines = InputUtils.readLines("y2016/day01.txt");
-        String[] commands = lines.get(0).split(", ");
+        var commands = lines.get(0).split(", ");
 
         Vector v = Vector.of(0, 0);
         Vector dir = Vector.of(0, 1);
         Vector hq = null;
 
-        Set<Vector> set = new HashSet<>();
+        var set = new HashSet<>();
         set.add(v);
         for (String cmd : commands) {
             if (cmd.charAt(0) == 'R') {
