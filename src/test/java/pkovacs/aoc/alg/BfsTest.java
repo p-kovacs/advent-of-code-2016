@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import pkovacs.aoc.util.IntPair;
+import pkovacs.aoc.util.LongPair;
 import pkovacs.aoc.util.Tile;
 
 import static java.util.stream.Collectors.toList;
@@ -23,28 +23,28 @@ public class BfsTest {
         // valid states, and the edges represent state transformations (steps). The graph is not generated
         // explicitly, but the next states are generated on-the-fly during the traversal.
 
-        var result = Bfs.run(new IntPair(0, 0), state -> {
-            var list = new ArrayList<IntPair>();
-            list.add(new IntPair(3, state.b)); // 3-liter jug <-- fountain
-            list.add(new IntPair(state.a, 5)); // 5-liter jug <-- fountain
-            list.add(new IntPair(0, state.b)); // 3-liter jug --> fountain
-            list.add(new IntPair(state.a, 0)); // 5-liter jug --> fountain
-            int d1 = Math.min(3 - state.a, state.b);
-            list.add(new IntPair(state.a + d1, state.b - d1)); // 3-liter jug <-- 5-liter jug
-            int d2 = Math.min(5 - state.b, state.a);
-            list.add(new IntPair(state.a - d2, state.b + d2)); // 3-liter jug --> 5-liter jug
+        var result = Bfs.run(LongPair.of(0, 0), state -> {
+            var list = new ArrayList<LongPair>();
+            list.add(LongPair.of(3, state.b)); // 3-liter jug <-- fountain
+            list.add(LongPair.of(state.a, 5)); // 5-liter jug <-- fountain
+            list.add(LongPair.of(0, state.b)); // 3-liter jug --> fountain
+            list.add(LongPair.of(state.a, 0)); // 5-liter jug --> fountain
+            long d1 = Math.min(3 - state.a, state.b);
+            list.add(LongPair.of(state.a + d1, state.b - d1)); // 3-liter jug <-- 5-liter jug
+            long d2 = Math.min(5 - state.b, state.a);
+            list.add(LongPair.of(state.a - d2, state.b + d2)); // 3-liter jug --> 5-liter jug
             return list;
         }, pair -> pair.b == 4);
 
         assertTrue(result.isPresent());
         assertEquals(6, result.get().getDist());
-        assertEquals(List.of(new IntPair(0, 0),
-                new IntPair(0, 5),
-                new IntPair(3, 2),
-                new IntPair(0, 2),
-                new IntPair(2, 0),
-                new IntPair(2, 5),
-                new IntPair(3, 4)),
+        assertEquals(List.of(LongPair.of(0, 0),
+                LongPair.of(0, 5),
+                LongPair.of(3, 2),
+                LongPair.of(0, 2),
+                LongPair.of(2, 0),
+                LongPair.of(2, 5),
+                LongPair.of(3, 4)),
                 result.get().getPath());
     }
 

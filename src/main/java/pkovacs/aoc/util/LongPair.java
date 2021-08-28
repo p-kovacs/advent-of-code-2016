@@ -4,15 +4,21 @@ import java.util.Objects;
 
 /**
  * Represents an immutable pair of long values.
+ * <p>
+ * This class can be slightly faster or more convenient than using {@link org.apache.commons.lang3.tuple.Pair}.
  */
 public class LongPair {
 
     public final long a;
     public final long b;
 
-    public LongPair(long a, long b) {
+    private LongPair(long a, long b) {
         this.a = a;
         this.b = b;
+    }
+
+    public static LongPair of(long a, long b) {
+        return new LongPair(a, b);
     }
 
     public long a() {
