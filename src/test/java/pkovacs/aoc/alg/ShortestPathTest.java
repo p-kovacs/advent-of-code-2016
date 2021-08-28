@@ -23,8 +23,8 @@ public class ShortestPathTest {
         // See maze2.txt, '#' represents a wall tile, '.' represents an empty tile.
 
         var maze = Files.readAllLines(Path.of(getClass().getResource("maze2.txt").toURI()));
-        var start = new Tile(0, 0);
-        var end = new Tile(9, 11);
+        var start = Tile.of(0, 0);
+        var end = Tile.of(9, 11);
 
         // Find path with large detonationTime --> same as BFS
         long detonationTime = 32;

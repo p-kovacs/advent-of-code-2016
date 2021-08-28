@@ -11,9 +11,9 @@ public class HexTileTest {
 
     @Test
     public void test() {
-        var c = new HexTile(12, 42);
-        var d = new HexTile(42, 12);
-        var e = new HexTile(42, 12);
+        var c = HexTile.of(12, 42);
+        var d = HexTile.of(42, 12);
+        var e = HexTile.of(42, 12);
 
         assertEquals(12, c.row);
         assertEquals(42, c.col);
@@ -21,14 +21,14 @@ public class HexTileTest {
         assertEquals(d, e);
 
         assertEquals(c, c.getTile("nwwswee"));
-        assertEquals(new HexTile(13, 42), c.getTile("esew"));
+        assertEquals(HexTile.of(13, 42), c.getTile("esew"));
 
-        assertEquals(List.of(new HexTile(12, 41), new HexTile(12, 43),
-                new HexTile(11, 42), new HexTile(11, 43),
-                new HexTile(13, 41), new HexTile(13, 42)), c.getNeighbors());
-        assertEquals(List.of(new HexTile(12, 42), new HexTile(12, 41), new HexTile(12, 43),
-                new HexTile(11, 42), new HexTile(11, 43),
-                new HexTile(13, 41), new HexTile(13, 42)), c.getNeighbors(true));
+        assertEquals(List.of(HexTile.of(12, 41), HexTile.of(12, 43),
+                HexTile.of(11, 42), HexTile.of(11, 43),
+                HexTile.of(13, 41), HexTile.of(13, 42)), c.getNeighbors());
+        assertEquals(List.of(HexTile.of(12, 42), HexTile.of(12, 41), HexTile.of(12, 43),
+                HexTile.of(11, 42), HexTile.of(11, 43),
+                HexTile.of(13, 41), HexTile.of(13, 42)), c.getNeighbors(true));
     }
 
 }

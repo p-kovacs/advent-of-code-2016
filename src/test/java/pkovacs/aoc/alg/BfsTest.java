@@ -54,8 +54,8 @@ public class BfsTest {
         // See maze1.txt, '#' represents a wall tile, '.' represents an empty tile.
 
         var maze = Files.readAllLines(Path.of(getClass().getResource("maze1.txt").toURI()));
-        var start = new Tile(0, 0);
-        var end = new Tile(9, 11);
+        var start = Tile.of(0, 0);
+        var end = Tile.of(9, 11);
 
         var result = Bfs.run(start,
                 cell -> cell.getFourNeighbors().stream()

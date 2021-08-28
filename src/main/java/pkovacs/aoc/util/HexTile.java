@@ -14,24 +14,28 @@ public class HexTile {
     public final int row;
     public final int col;
 
-    public HexTile(int row, int col) {
+    private HexTile(int row, int col) {
         this.col = col;
         this.row = row;
     }
 
+    public static HexTile of(int row, int col) {
+        return new HexTile(row, col);
+    }
+
     public HexTile getNeighbor(String dir) {
         if ("w".equals(dir)) {
-            return new HexTile(row, col - 1);
+            return HexTile.of(row, col - 1);
         } else if ("e".equals(dir)) {
-            return new HexTile(row, col + 1);
+            return HexTile.of(row, col + 1);
         } else if ("nw".equals(dir)) {
-            return new HexTile(row - 1, col);
+            return HexTile.of(row - 1, col);
         } else if ("ne".equals(dir)) {
-            return new HexTile(row - 1, col + 1);
+            return HexTile.of(row - 1, col + 1);
         } else if ("sw".equals(dir)) {
-            return new HexTile(row + 1, col - 1);
+            return HexTile.of(row + 1, col - 1);
         } else if ("se".equals(dir)) {
-            return new HexTile(row + 1, col);
+            return HexTile.of(row + 1, col);
         }
         throw new IllegalArgumentException();
     }

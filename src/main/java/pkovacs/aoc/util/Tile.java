@@ -14,9 +14,13 @@ public class Tile {
     public final int row;
     public final int col;
 
-    public Tile(int row, int col) {
+    private Tile(int row, int col) {
         this.row = row;
         this.col = col;
+    }
+
+    public static Tile of(int row, int col) {
+        return new Tile(row, col);
     }
 
     public boolean isValid(int rowCount, int colCount) {
