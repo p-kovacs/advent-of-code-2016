@@ -15,7 +15,7 @@ import org.apache.commons.lang3.tuple.Pair;
  * algorithm. Namely, it is the
  * <a href="https://en.wikipedia.org/wiki/Shortest_Path_Faster_Algorithm">SPFA algorithm</a>.
  * <p>
- * The input is a directed graph with long integer edge weights (defined by an edge provide function) and one or more
+ * The input is a directed graph with long integer edge weights (defined by an edge provider function) and one or more
  * source nodes. The edge provider function must provide a collection of (node, length) pairs for each node.
  * An optional target predicate can also be specified in order to get path result for a single node instead of
  * all nodes. However, it does not make the search process faster.
