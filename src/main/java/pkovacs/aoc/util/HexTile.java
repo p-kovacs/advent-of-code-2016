@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 public class HexTile {
 
-    private static String[] DIRECTIONS = new String[] { "w", "e", "nw", "ne", "sw", "se" };
+    private static final String[] DIRECTIONS = new String[] { "w", "e", "nw", "ne", "sw", "se" };
 
     public final int row;
     public final int col;
