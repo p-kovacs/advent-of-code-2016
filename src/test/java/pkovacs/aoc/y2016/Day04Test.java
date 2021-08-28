@@ -7,8 +7,8 @@ class Day04Test extends DayTestBase {
     @Test
     public void test() {
         Day04.main(null);
-        assertSolution1("0");
-        assertSolution2("0");
+        assertSolution1("361724");
+        assertSolution2("482");
     }
 
 }
