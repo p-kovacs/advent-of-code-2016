@@ -3,75 +3,74 @@ package pkovacs.aoc.util;
 import java.util.Objects;
 
 /**
- * Represents a 2-dimensional mutable vector with integer (long) coordinates and Manhattan distance.
+ * Represents a 2-dimensional immutable vector with integer (long) coordinates and Manhattan distance.
  * <p>
  * The coordinates are interpreted as usual in Math: (0,1) means "north", (0,-1) means "south",
  * (1,0) means "east", and (0,1) means "west".
  */
 public class Vector {
 
-    public long x;
-    public long y;
+    public final long x;
+    public final long y;
 
     public Vector(long x, long y) {
         this.x = x;
         this.y = y;
     }
 
-    public Vector(Vector v) {
-        this(v.x, v.y);
-    }
-
     public static Vector of(long x, long y) {
         return new Vector(x, y);
     }
 
-    public static Vector of(Vector v) {
-        return new Vector(v.x, v.y);
+    public Vector add(long dx, long dy) {
+        return Vector.of(x + dx, y + dy);
     }
 
-    public void set(long x, long y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public void set(Vector v) {
-        set(v.x, v.y);
-    }
-
-    public void add(long dx, long dy) {
-        set(x + dx, y + dy);
-    }
-
-    public void add(Vector v) {
-        add(v.x, v.y);
-    }
-
-    public void neg() {
-        set(-x, -y);
-    }
-
-    public void rotateRight() {
-        set(y, -x);
-    }
-
-    public void rotateLeft() {
-        set(-y, x);
-    }
-
-    public long length() {
-        return Math.abs(x) + Math.abs(y);
+    public Vector add(Vector v) {
+        return Vector.of(x + v.x, y + v.y);
     }
 
     public static Vector add(Vector a, Vector b) {
-        return new Vector(a.x + b.x, a.y + b.y);
+        return Vector.of(a.x + b.x, a.y + b.y);
+    }
+
+    public Vector sub(long dx, long dy) {
+        return add(-dx, -dy);
+    }
+
+    public Vector sub(Vector v) {
+        return add(-v.x, -v.y);
     }
 
     public static Vector sub(Vector a, Vector b) {
-        return new Vector(a.x - b.x, a.y - b.y);
+        return add(a, b.neg());
     }
 
-    public static long dist(Vector a, Vector b) {
+    public Vector neg() {
+        return Vector.of(-x, -y);
+    }
+
+    public Vector rotateRight() {
+        return Vector.of(y, -x);
+    }
+
+    public Vector rotateLeft() {
+        return Vector.of(-y, x);
+    }
+
+    public long length() {
+        return getDistance();
+    }
+
+    public long getDistance() {
+        return Math.abs(x) + Math.abs(y);
+    }
+
+    public long getDistance(Vector v) {
+        return getDistance(this, v);
+    }
+
+    public static long getDistance(Vector a, Vector b) {
         return sub(a, b).length();
     }
 

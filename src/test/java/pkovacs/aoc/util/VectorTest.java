@@ -8,46 +8,34 @@ public class VectorTest {
 
     @Test
     public void test() {
-        var a = new Vector(0, 0);
-        var b = new Vector(42, 12);
+        var a = Vector.of(0, 0);
+        var b = Vector.of(42, 12);
 
-        a.add(b);
-        assertEquals(b, a);
+        assertEquals(b, a.add(b));
 
-        a.add(-2, -2);
-        assertEquals(new Vector(40, 10), a);
-        a.neg();
-        assertEquals(new Vector(-40, -10), a);
-        a.set(40, 10);
-        assertEquals(new Vector(40, 10), a);
+        a = a.add(b).sub(2, 2);
+        assertEquals(Vector.of(40, 10), a);
+        assertEquals(Vector.of(-40, -10), a.neg());
 
-        a.rotateRight();
-        assertEquals(new Vector(10, -40), a);
-        a.rotateRight();
-        assertEquals(new Vector(-40, -10), a);
-        a.rotateRight();
-        assertEquals(new Vector(-10, 40), a);
-        a.rotateRight();
-        assertEquals(new Vector(40, 10), a);
+        assertEquals(Vector.of(10, -40), a.rotateRight());
+        assertEquals(Vector.of(-40, -10), a.rotateRight().rotateRight());
+        assertEquals(Vector.of(-10, 40), a.rotateRight().rotateRight().rotateRight());
+        assertEquals(Vector.of(40, 10), a.rotateRight().rotateRight().rotateRight().rotateRight());
 
-        a.rotateLeft();
-        assertEquals(new Vector(-10, 40), a);
-        a.rotateLeft();
-        assertEquals(new Vector(-40, -10), a);
-        a.rotateLeft();
-        assertEquals(new Vector(10, -40), a);
-        a.rotateLeft();
-        assertEquals(new Vector(40, 10), a);
+        assertEquals(Vector.of(-10, 40), a.rotateLeft());
+        assertEquals(Vector.of(-40, -10), a.rotateLeft().rotateLeft());
+        assertEquals(Vector.of(10, -40), a.rotateLeft().rotateLeft().rotateLeft());
+        assertEquals(Vector.of(40, 10), a.rotateLeft().rotateLeft().rotateLeft().rotateLeft());
 
-        var c = new Vector(42, 12);
-        var d = new Vector(c);
-        assertEquals(0, Vector.dist(c, d));
-        d.rotateRight();
-        assertEquals(42 + 12 + 30, Vector.dist(c, d));
-        c.rotateLeft();
-        assertEquals(c.length() + d.length(), Vector.dist(c, d));
-        c.neg();
-        assertEquals(0, Vector.dist(c, d));
+        var c = Vector.of(42, 12);
+        var d = Vector.of(42, 12);
+        assertEquals(0, Vector.getDistance(c, d));
+        d = d.rotateRight();
+        assertEquals(42 + 12 + 30, Vector.getDistance(c, d));
+        c = c.rotateLeft();
+        assertEquals(c.length() + d.length(), Vector.getDistance(c, d));
+        c = c.neg();
+        assertEquals(0, Vector.getDistance(c, d));
     }
 
 }
