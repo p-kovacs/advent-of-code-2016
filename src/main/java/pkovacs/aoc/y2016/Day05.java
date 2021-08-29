@@ -31,7 +31,7 @@ public class Day05 {
             i++;
         }
 
-        System.out.println("Part 1: " + pwd1.toString());
+        System.out.println("Part 1: " + pwd1);
         System.out.println("Part 2: " + new String(pwd2));
     }
 
