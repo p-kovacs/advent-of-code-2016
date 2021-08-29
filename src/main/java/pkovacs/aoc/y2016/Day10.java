@@ -29,7 +29,8 @@ public class Day10 {
         while (!bots.isEmpty()) {
             for (var line : lines) {
                 if (line.startsWith("bot")) {
-                    var parts = InputUtils.scan(line, "bot %d gives low to %s and high to %s");
+                    var parts = InputUtils.scan(line,
+                            "bot %d gives low to %s and high to %s");
                     int bot = parts.get(0).asInt();
                     if (bots.get(bot).size() == 2) {
                         long low = Math.min(bots.get(bot).get(0), bots.get(bot).get(1));
