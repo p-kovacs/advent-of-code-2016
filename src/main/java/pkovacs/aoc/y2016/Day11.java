@@ -1,7 +1,9 @@
 package pkovacs.aoc.y2016;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
@@ -30,19 +32,7 @@ public class Day11 {
     }
 
     private static int solve(List<String> lines) {
-
-        final var types = getAllMatches(String.join(" ", lines), "[^ ]*-compatible")
-                .stream()
-                .map(x -> x.split("-")[0])
-                .distinct()
-                .collect(toList());
-        final int itemCount = types.size() * 2;
-
-        var startState = new State(lines, types);
-
-        var targetState = new State(startState);
-        targetState.setElevator(TARGET_FLOOR);
-        IntStream.range(0, itemCount).forEach(i -> targetState.set(i, TARGET_FLOOR));
+        var startState = new State(lines);
 
         long start = System.currentTimeMillis();
 
@@ -51,38 +41,34 @@ public class Day11 {
 
             var nextStates = new ArrayList<State>();
             for (int offset : new byte[] { +1, -1 }) {
-                int elevator = st.getElevator();
-                int newElevator = elevator + offset;
-                if (newElevator < 0 || newElevator >= FLOOR_COUNT) {
+                int newElevatorPos = st.elevator + offset;
+                if (newElevatorPos < 0 || newElevatorPos >= FLOOR_COUNT) {
                     continue;
                 }
-//                if (offset < 0 && IntStream.range(0, st.microchips.length)
-//                        .allMatch(i -> st.microchips[i] >= st.elevator && st.generators[i] >= st.elevator)) {
-//                    continue;
-//                }
 
                 State base = new State(st);
-                base.setElevator(newElevator);
+                base.elevator = newElevatorPos;
 
                 // Bring one or two items
+                int itemCount = st.getItemCount();
                 for (int a = 0; a < itemCount; a++) {
-                    if (st.get(a) != elevator) {
+                    if (st.getFloor(a) != st.elevator) {
                         continue;
                     }
                     var nextState1 = new State(base);
-                    nextState1.set(a, newElevator);
-                    if (nextState1.isSafe(itemCount)) {
+                    nextState1.move(a, newElevatorPos);
+                    if (nextState1.isSafe()) {
                         nextStates.add(nextState1);
                     }
 
                     for (int b = a + 1; b < itemCount; b++) {
-                        if (st.get(b) != elevator) {
+                        if (st.getFloor(b) != st.elevator) {
                             continue;
                         }
                         var nextState2 = new State(base);
-                        nextState2.set(a, newElevator);
-                        nextState2.set(b, newElevator);
-                        if (nextState2.isSafe(itemCount)) {
+                        nextState2.move(a, newElevatorPos);
+                        nextState2.move(b, newElevatorPos);
+                        if (nextState2.isSafe()) {
                             nextStates.add(nextState2);
                         }
                     }
@@ -90,12 +76,12 @@ public class Day11 {
             }
 
             return nextStates;
-        }, st -> st.equals(targetState)).get();
+        }, State::isTerminal).get();
 
-        System.out.println("DIST:      " + result.getDist());
-        System.out.println("Time (ms): " + (System.currentTimeMillis() - start));
-        System.out.println(visitedNodeCount);
-        System.out.println();
+//        System.out.println("DIST:      " + result.getDist());
+//        System.out.println("Time (ms): " + (System.currentTimeMillis() - start));
+//        System.out.println(visitedNodeCount);
+//        System.out.println();
 //
 //        for (var st : result.getPath()) {
 //            System.out.println(st);
@@ -104,29 +90,29 @@ public class Day11 {
         return (int) result.getDist();
     }
 
-    private static List<String> getAllMatches(String str, String regex) {
-        var matches = new ArrayList<String>();
-        Matcher m = Pattern.compile("(" + regex + ")").matcher(str);
-        while (m.find()) {
-            matches.add(m.group(1));
-        }
-        return matches;
-    }
-
     private static class State {
 
-        // Last 2 bits: elevator position (floor ID)
-        // Previous 2*k bits: positions of microchips
-        // Previous 2*k bits: positions of generators
-        long data;
+        int elevator;
+        final byte[] microchips; // floor ID for each microchip
+        final byte[] generators; // floor ID for each generator
 
         State(State st) {
-            data = st.data;
+            elevator = st.elevator;
+            microchips = st.microchips.clone();
+            generators = st.generators.clone();
         }
 
-        State(List<String> lines, List<String> types) {
-            data = 0;
+        State(List<String> lines) {
+            elevator = 0;
 
+            var types = getAllMatches(String.join(" ", lines), "[^ ]*-compatible")
+                    .stream()
+                    .map(x -> x.split("-")[0])
+                    .distinct()
+                    .collect(toList());
+
+            microchips = new byte[types.size()];
+            generators = new byte[types.size()];
             for (int k = 0; k < FLOOR_COUNT; k++) {
                 var line = lines.get(k);
                 if (line.contains("nothing relevant")) {
@@ -134,42 +120,44 @@ public class Day11 {
                 }
                 for (var gen : getAllMatches(line, "[^ ]* generator")) {
                     int typeId = types.indexOf(gen.replace(" generator", ""));
-                    set(typeId, k);
+                    generators[typeId] = (byte) k;
                 }
                 for (var gen : getAllMatches(line, "[^ ]*-compatible microchip")) {
                     int typeId = types.indexOf(gen.replace("-compatible microchip", ""));
-                    set(types.size() + typeId, k);
+                    microchips[typeId] = (byte) k;
                 }
             }
         }
 
-        int getElevator() {
-            return get(-1);
+        int getItemCount() {
+            return microchips.length + generators.length;
         }
 
-        void setElevator(int floor) {
-            set(-1, floor);
+        int getFloor(int item) {
+            byte[] array = item < microchips.length ? microchips : generators;
+            int index = item < microchips.length ? item : item - microchips.length;
+            return array[index];
         }
 
-        int get(int item) {
-            int offset = (item + 1) << 1;
-            return (int) ((data >> offset) & 0x3L);
+        void move(int item, int floor) {
+            byte[] array = item < microchips.length ? microchips : generators;
+            int index = item < microchips.length ? item : item - microchips.length;
+            array[index] = (byte) floor;
         }
 
-        void set(int item, int floor) {
-            int offset = (item + 1) << 1;
-            data = data & ~(0x3L << offset) | ((floor & 0x3L) << offset);
+        boolean isTerminal() {
+            return IntStream.range(0, microchips.length)
+                    .allMatch(i -> microchips[i] == TARGET_FLOOR && generators[i] == TARGET_FLOOR);
         }
 
-        boolean isSafe(int itemCount) {
+        boolean isSafe() {
             // Check that there are no microchips in danger on any floor
-            int generatorOffset = itemCount / 2;
             for (int k = 0; k < FLOOR_COUNT; k++) {
-                if (!containsGenerator(k, itemCount)) {
+                if (!containsGenerator(k)) {
                     continue; // no generators here
                 }
-                for (int i = 0; i < generatorOffset; i++) {
-                    if (get(i) == k && get(generatorOffset + i) != k) {
+                for (int i = 0; i < microchips.length; i++) {
+                    if (microchips[i] == k && generators[i] != k) {
                         return false; // this microchip would be destroyed
                     }
                 }
@@ -177,18 +165,49 @@ public class Day11 {
             return true;
         }
 
-        private boolean containsGenerator(int floor, int itemCount) {
-            return IntStream.range(itemCount / 2, itemCount).anyMatch(i -> get(i) == floor);
+        private boolean containsGenerator(int floor) {
+            for (byte x : generators) {
+                if (x == floor) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static List<String> getAllMatches(String str, String regex) {
+            var matches = new ArrayList<String>();
+            Matcher m = Pattern.compile("(" + regex + ")").matcher(str);
+            while (m.find()) {
+                matches.add(m.group(1));
+            }
+            return matches;
         }
 
         @Override
-        public boolean equals(Object other) {
-            return other instanceof State && ((State) other).data == data;
+        public String toString() {
+            return String.format("E: %d, M: %s, G: %s",
+                    elevator, Arrays.toString(microchips), Arrays.toString(generators));
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            State state = (State) o;
+            return elevator == state.elevator && Arrays.equals(microchips, state.microchips)
+                    && Arrays.equals(generators, state.generators);
         }
 
         @Override
         public int hashCode() {
-            return (int) data;
+            int result = Objects.hash(elevator);
+            result = 31 * result + Arrays.hashCode(microchips);
+            result = 31 * result + Arrays.hashCode(generators);
+            return result;
         }
 
     }
