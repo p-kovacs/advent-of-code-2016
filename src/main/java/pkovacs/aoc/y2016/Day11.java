@@ -3,7 +3,6 @@ package pkovacs.aoc.y2016;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
@@ -34,6 +33,10 @@ public class Day11 {
     private static int solve(List<String> lines) {
         var startState = new State(lines);
 
+        var targetState = new State(startState);
+        targetState.elevator = TARGET_FLOOR;
+        IntStream.range(0, targetState.getItemCount()).forEach(i -> targetState.setFloor(i, TARGET_FLOOR));
+
         long start = System.currentTimeMillis();
 
         var result = Bfs.run(startState, st -> {
@@ -56,7 +59,7 @@ public class Day11 {
                         continue;
                     }
                     var nextState1 = new State(base);
-                    nextState1.move(a, newElevatorPos);
+                    nextState1.setFloor(a, newElevatorPos);
                     if (nextState1.isSafe()) {
                         nextStates.add(nextState1);
                     }
@@ -66,8 +69,8 @@ public class Day11 {
                             continue;
                         }
                         var nextState2 = new State(base);
-                        nextState2.move(a, newElevatorPos);
-                        nextState2.move(b, newElevatorPos);
+                        nextState2.setFloor(a, newElevatorPos);
+                        nextState2.setFloor(b, newElevatorPos);
                         if (nextState2.isSafe()) {
                             nextStates.add(nextState2);
                         }
@@ -76,7 +79,7 @@ public class Day11 {
             }
 
             return nextStates;
-        }, State::isTerminal).get();
+        }, targetState::equals).get();
 
 //        System.out.println("DIST:      " + result.getDist());
 //        System.out.println("Time (ms): " + (System.currentTimeMillis() - start));
@@ -93,13 +96,11 @@ public class Day11 {
     private static class State {
 
         int elevator;
-        final byte[] microchips; // floor ID for each microchip
-        final byte[] generators; // floor ID for each generator
+        final byte[] items; // floor ID for items
 
         State(State st) {
             elevator = st.elevator;
-            microchips = st.microchips.clone();
-            generators = st.generators.clone();
+            items = st.items.clone();
         }
 
         State(List<String> lines) {
@@ -111,8 +112,7 @@ public class Day11 {
                     .distinct()
                     .collect(toList());
 
-            microchips = new byte[types.size()];
-            generators = new byte[types.size()];
+            items = new byte[types.size() * 2];
             for (int k = 0; k < FLOOR_COUNT; k++) {
                 var line = lines.get(k);
                 if (line.contains("nothing relevant")) {
@@ -120,44 +120,35 @@ public class Day11 {
                 }
                 for (var gen : getAllMatches(line, "[^ ]* generator")) {
                     int typeId = types.indexOf(gen.replace(" generator", ""));
-                    generators[typeId] = (byte) k;
+                    items[typeId] = (byte) k;
                 }
                 for (var gen : getAllMatches(line, "[^ ]*-compatible microchip")) {
                     int typeId = types.indexOf(gen.replace("-compatible microchip", ""));
-                    microchips[typeId] = (byte) k;
+                    items[types.size() + typeId] = (byte) k;
                 }
             }
         }
 
         int getItemCount() {
-            return microchips.length + generators.length;
+            return items.length;
         }
 
-        int getFloor(int item) {
-            byte[] array = item < microchips.length ? microchips : generators;
-            int index = item < microchips.length ? item : item - microchips.length;
-            return array[index];
+        int getFloor(int itemId) {
+            return items[itemId];
         }
 
-        void move(int item, int floor) {
-            byte[] array = item < microchips.length ? microchips : generators;
-            int index = item < microchips.length ? item : item - microchips.length;
-            array[index] = (byte) floor;
-        }
-
-        boolean isTerminal() {
-            return IntStream.range(0, microchips.length)
-                    .allMatch(i -> microchips[i] == TARGET_FLOOR && generators[i] == TARGET_FLOOR);
+        void setFloor(int itemId, int floor) {
+            items[itemId] = (byte) floor;
         }
 
         boolean isSafe() {
             // Check that there are no microchips in danger on any floor
             for (int k = 0; k < FLOOR_COUNT; k++) {
                 if (!containsGenerator(k)) {
-                    continue; // no generators here
+                    continue;
                 }
-                for (int i = 0; i < microchips.length; i++) {
-                    if (microchips[i] == k && generators[i] != k) {
+                for (int i = 0, offset = items.length / 2; i < offset; i++) {
+                    if (items[i] == k && items[offset + i] != k) {
                         return false; // this microchip would be destroyed
                     }
                 }
@@ -166,8 +157,8 @@ public class Day11 {
         }
 
         private boolean containsGenerator(int floor) {
-            for (byte x : generators) {
-                if (x == floor) {
+            for (int i = items.length / 2; i < items.length; i++) {
+                if (items[i] == floor) {
                     return true;
                 }
             }
@@ -185,8 +176,7 @@ public class Day11 {
 
         @Override
         public String toString() {
-            return String.format("E: %d, M: %s, G: %s",
-                    elevator, Arrays.toString(microchips), Arrays.toString(generators));
+            return String.format("E: %d, Items: %s", elevator, Arrays.toString(items));
         }
 
         @Override
@@ -198,16 +188,12 @@ public class Day11 {
                 return false;
             }
             State state = (State) o;
-            return elevator == state.elevator && Arrays.equals(microchips, state.microchips)
-                    && Arrays.equals(generators, state.generators);
+            return elevator == state.elevator && Arrays.equals(items, state.items);
         }
 
         @Override
         public int hashCode() {
-            int result = Objects.hash(elevator);
-            result = 31 * result + Arrays.hashCode(microchips);
-            result = 31 * result + Arrays.hashCode(generators);
-            return result;
+            return 31 * elevator + Arrays.hashCode(items);
         }
 
     }
