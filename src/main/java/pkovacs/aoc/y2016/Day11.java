@@ -2,6 +2,7 @@ package pkovacs.aoc.y2016;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,24 +34,17 @@ public class Day11 {
     private static int solve(List<String> lines) {
         var startState = new State(lines);
 
-        var targetState = new State(startState);
-        targetState.elevator = TARGET_FLOOR;
-        IntStream.range(0, targetState.getItemCount()).forEach(i -> targetState.setFloor(i, TARGET_FLOOR));
-
         long start = System.currentTimeMillis();
 
         var result = Bfs.run(startState, st -> {
             visitedNodeCount++;
 
-            var nextStates = new ArrayList<State>();
-            for (int offset : new byte[] { +1, -1 }) {
+            var nextStates = new HashSet<State>();
+            for (int offset : new int[] { +1, -1 }) {
                 int newElevatorPos = st.elevator + offset;
                 if (newElevatorPos < 0 || newElevatorPos >= FLOOR_COUNT) {
                     continue;
                 }
-
-                State base = new State(st);
-                base.elevator = newElevatorPos;
 
                 // Bring one or two items
                 int itemCount = st.getItemCount();
@@ -58,8 +52,7 @@ public class Day11 {
                     if (st.getFloor(a) != st.elevator) {
                         continue;
                     }
-                    var nextState1 = new State(base);
-                    nextState1.setFloor(a, newElevatorPos);
+                    var nextState1 = st.move(a, newElevatorPos);
                     if (nextState1.isSafe()) {
                         nextStates.add(nextState1);
                     }
@@ -68,9 +61,7 @@ public class Day11 {
                         if (st.getFloor(b) != st.elevator) {
                             continue;
                         }
-                        var nextState2 = new State(base);
-                        nextState2.setFloor(a, newElevatorPos);
-                        nextState2.setFloor(b, newElevatorPos);
+                        var nextState2 = nextState1.move(b, newElevatorPos);
                         if (nextState2.isSafe()) {
                             nextStates.add(nextState2);
                         }
@@ -79,7 +70,7 @@ public class Day11 {
             }
 
             return nextStates;
-        }, targetState::equals).get();
+        }, State::isTerminal).get();
 
 //        System.out.println("DIST:      " + result.getDist());
 //        System.out.println("Time (ms): " + (System.currentTimeMillis() - start));
@@ -96,10 +87,10 @@ public class Day11 {
     private static class State {
 
         int elevator;
-        final byte[] items; // floor ID for items
+        final int[] items; // floor ID for items
 
         State(State st) {
-            elevator = st.elevator;
+            this.elevator = elevator;
             items = st.items.clone();
         }
 
@@ -112,7 +103,7 @@ public class Day11 {
                     .distinct()
                     .collect(toList());
 
-            items = new byte[types.size() * 2];
+            items = new int[types.size() * 2];
             for (int k = 0; k < FLOOR_COUNT; k++) {
                 var line = lines.get(k);
                 if (line.contains("nothing relevant")) {
@@ -120,11 +111,11 @@ public class Day11 {
                 }
                 for (var gen : getAllMatches(line, "[^ ]* generator")) {
                     int typeId = types.indexOf(gen.replace(" generator", ""));
-                    items[typeId] = (byte) k;
+                    items[typeId * 2] = k;
                 }
                 for (var gen : getAllMatches(line, "[^ ]*-compatible microchip")) {
                     int typeId = types.indexOf(gen.replace("-compatible microchip", ""));
-                    items[types.size() + typeId] = (byte) k;
+                    items[typeId * 2 + 1] = k;
                 }
             }
         }
@@ -137,8 +128,16 @@ public class Day11 {
             return items[itemId];
         }
 
-        void setFloor(int itemId, int floor) {
-            items[itemId] = (byte) floor;
+        State move(int itemId, int floor) {
+            var state = new State(this);
+            state.elevator = floor;
+            state.items[itemId] = floor;
+            return state;
+        }
+
+        boolean isTerminal() {
+            return elevator == TARGET_FLOOR
+                    && IntStream.range(0, items.length).allMatch(i -> getFloor(i) == TARGET_FLOOR);
         }
 
         boolean isSafe() {
@@ -147,9 +146,9 @@ public class Day11 {
                 if (!containsGenerator(k)) {
                     continue;
                 }
-                for (int i = 0, offset = items.length / 2; i < offset; i++) {
-                    if (items[i] == k && items[offset + i] != k) {
-                        return false; // this microchip would be destroyed
+                for (int i = 0; i < items.length; i += 2) {
+                    if (items[i + 1] == k && items[i] != k) {
+                        return false; // this microchip (stored at index i+1) would be destroyed
                     }
                 }
             }
@@ -157,7 +156,7 @@ public class Day11 {
         }
 
         private boolean containsGenerator(int floor) {
-            for (int i = items.length / 2; i < items.length; i++) {
+            for (int i = 0; i < items.length; i += 2) {
                 if (items[i] == floor) {
                     return true;
                 }
@@ -187,13 +186,28 @@ public class Day11 {
             if (o == null || getClass() != o.getClass()) {
                 return false;
             }
-            State state = (State) o;
-            return elevator == state.elevator && Arrays.equals(items, state.items);
+            State other = (State) o;
+
+            return elevator == other.elevator
+                    && Arrays.equals(getCanonicalRepresentationOfItems(), other.getCanonicalRepresentationOfItems());
         }
 
         @Override
         public int hashCode() {
-            return 31 * elevator + Arrays.hashCode(items);
+            return elevator + Arrays.hashCode(getCanonicalRepresentationOfItems());
+        }
+
+        /**
+         * Item pairs are completely interchangeable. This method returns a sorted array in which each element
+         * represents an item pair by encoding the position of both the generator and the microchip.
+         */
+        private int[] getCanonicalRepresentationOfItems() {
+            int[] canonical = new int[items.length / 2];
+            for (int i = 0; i < items.length; i += 2) {
+                canonical[i / 2] = (items[i] << 8) | items[i + 1];
+            }
+            Arrays.sort(canonical);
+            return canonical;
         }
 
     }
