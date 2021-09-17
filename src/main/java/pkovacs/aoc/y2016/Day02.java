@@ -28,13 +28,13 @@ public class Day02 {
                 char ch = line.charAt(i);
                 Tile newPos = null;
                 if (ch == 'U') {
-                    newPos = Tile.of(pos.row - 1, pos.col);
+                    newPos = new Tile(pos.row() - 1, pos.col());
                 } else if (ch == 'D') {
-                    newPos = Tile.of(pos.row + 1, pos.col);
+                    newPos = new Tile(pos.row() + 1, pos.col());
                 } else if (ch == 'L') {
-                    newPos = Tile.of(pos.row, pos.col - 1);
+                    newPos = new Tile(pos.row(), pos.col() - 1);
                 } else if (ch == 'R') {
-                    newPos = Tile.of(pos.row, pos.col + 1);
+                    newPos = new Tile(pos.row(), pos.col() + 1);
                 }
                 if (board.containsKey(newPos)) {
                     pos = newPos;
@@ -47,33 +47,33 @@ public class Day02 {
 
     private static Map<Tile, Character> initBoard1() {
         var board = new HashMap<Tile, Character>();
-        board.put(Tile.of(0, 0), '1');
-        board.put(Tile.of(0, 1), '2');
-        board.put(Tile.of(0, 2), '3');
-        board.put(Tile.of(1, 0), '4');
-        board.put(Tile.of(1, 1), '5');
-        board.put(Tile.of(1, 2), '6');
-        board.put(Tile.of(2, 0), '7');
-        board.put(Tile.of(2, 1), '8');
-        board.put(Tile.of(2, 2), '9');
+        board.put(new Tile(0, 0), '1');
+        board.put(new Tile(0, 1), '2');
+        board.put(new Tile(0, 2), '3');
+        board.put(new Tile(1, 0), '4');
+        board.put(new Tile(1, 1), '5');
+        board.put(new Tile(1, 2), '6');
+        board.put(new Tile(2, 0), '7');
+        board.put(new Tile(2, 1), '8');
+        board.put(new Tile(2, 2), '9');
         return board;
     }
 
     private static Map<Tile, Character> initBoard2() {
         Map<Tile, Character> board = new HashMap<>();
-        board.put(Tile.of(0, 2), '1');
-        board.put(Tile.of(1, 1), '2');
-        board.put(Tile.of(1, 2), '3');
-        board.put(Tile.of(1, 3), '4');
-        board.put(Tile.of(2, 0), '5');
-        board.put(Tile.of(2, 1), '6');
-        board.put(Tile.of(2, 2), '7');
-        board.put(Tile.of(2, 3), '8');
-        board.put(Tile.of(2, 4), '9');
-        board.put(Tile.of(3, 1), 'A');
-        board.put(Tile.of(3, 2), 'B');
-        board.put(Tile.of(3, 3), 'C');
-        board.put(Tile.of(4, 2), 'D');
+        board.put(new Tile(0, 2), '1');
+        board.put(new Tile(1, 1), '2');
+        board.put(new Tile(1, 2), '3');
+        board.put(new Tile(1, 3), '4');
+        board.put(new Tile(2, 0), '5');
+        board.put(new Tile(2, 1), '6');
+        board.put(new Tile(2, 2), '7');
+        board.put(new Tile(2, 3), '8');
+        board.put(new Tile(2, 4), '9');
+        board.put(new Tile(3, 1), 'A');
+        board.put(new Tile(3, 2), 'B');
+        board.put(new Tile(3, 3), 'C');
+        board.put(new Tile(4, 2), 'D');
         return board;
     }
 

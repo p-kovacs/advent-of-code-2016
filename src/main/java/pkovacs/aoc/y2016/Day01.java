@@ -11,8 +11,8 @@ public class Day01 {
         var lines = InputUtils.readLines("y2016/day01.txt");
         var commands = lines.get(0).split(", ");
 
-        Vector v = Vector.of(0, 0);
-        Vector dir = Vector.of(0, 1);
+        Vector v = new Vector(0, 0);
+        Vector dir = new Vector(0, 1);
         Vector hq = null;
 
         var set = new HashSet<>();

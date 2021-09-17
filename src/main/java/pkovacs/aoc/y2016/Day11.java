@@ -34,7 +34,7 @@ public class Day11 {
     private static int solve(List<String> lines) {
         var startState = new State(lines);
 
-        long start = System.currentTimeMillis();
+//        long start = System.currentTimeMillis();
 
         var result = Bfs.run(startState, st -> {
             visitedNodeCount++;

@@ -23,8 +23,8 @@ public class ShortestPathTest {
         // See maze2.txt, '#' represents a wall tile, '.' represents an empty tile.
 
         var maze = Files.readAllLines(Path.of(getClass().getResource("maze2.txt").toURI()));
-        var start = Tile.of(0, 0);
-        var end = Tile.of(9, 11);
+        var start = new Tile(0, 0);
+        var end = new Tile(9, 11);
 
         // Find path with large detonationTime --> same as BFS
         long detonationTime = 32;
@@ -53,7 +53,7 @@ public class ShortestPathTest {
         var result = Bfs.run(start,
                 pos -> pos.getFourNeighbors().stream()
                         .filter(p -> p.isValid(maze.size(), maze.get(0).length()))
-                        .filter(p -> maze.get(p.row).charAt(p.col) == '.')
+                        .filter(p -> maze.get(p.row()).charAt(p.col()) == '.')
                         .collect(toList()),
                 end::equals);
 
@@ -66,7 +66,7 @@ public class ShortestPathTest {
         var result = ShortestPath.find(start,
                 pos -> pos.getFourNeighbors().stream()
                         .filter(p -> p.isValid(maze.size(), maze.get(0).length()))
-                        .map(p -> Pair.of(p, maze.get(p.row).charAt(p.col) == '.' ? 1 : detonationTime))
+                        .map(p -> Pair.of(p, maze.get(p.row()).charAt(p.col()) == '.' ? 1 : detonationTime))
                         .collect(toList()),
                 end::equals);
 

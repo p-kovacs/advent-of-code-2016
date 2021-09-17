@@ -13,12 +13,12 @@ public class TileTest {
 
     @Test
     public void test() {
-        var c = Tile.of(12, 42);
-        var d = Tile.of(42, 12);
-        var e = Tile.of(42, 12);
+        var c = new Tile(12, 42);
+        var d = new Tile(42, 12);
+        var e = new Tile(42, 12);
 
-        assertEquals(12, c.row);
-        assertEquals(42, c.col);
+        assertEquals(12, c.row());
+        assertEquals(42, c.col());
         assertNotEquals(c, d);
         assertEquals(d, e);
 
@@ -26,15 +26,15 @@ public class TileTest {
         assertFalse(c.isValid(12, 43));
         assertFalse(c.isValid(13, 42));
 
-        assertEquals(List.of(Tile.of(11, 42), Tile.of(12, 41), Tile.of(12, 43),
-                Tile.of(13, 42)), c.getFourNeighbors());
-        assertEquals(List.of(Tile.of(11, 41), Tile.of(11, 42), Tile.of(11, 43),
-                Tile.of(12, 41), Tile.of(12, 43),
-                Tile.of(13, 41), Tile.of(13, 42), Tile.of(13, 43)),
+        assertEquals(List.of(new Tile(11, 42), new Tile(12, 41), new Tile(12, 43),
+                new Tile(13, 42)), c.getFourNeighbors());
+        assertEquals(List.of(new Tile(11, 41), new Tile(11, 42), new Tile(11, 43),
+                new Tile(12, 41), new Tile(12, 43),
+                new Tile(13, 41), new Tile(13, 42), new Tile(13, 43)),
                 c.getEightNeighbors());
-        assertEquals(List.of(Tile.of(11, 41), Tile.of(11, 42), Tile.of(11, 43),
-                Tile.of(12, 41), Tile.of(12, 42), Tile.of(12, 43),
-                Tile.of(13, 41), Tile.of(13, 42), Tile.of(13, 43)),
+        assertEquals(List.of(new Tile(11, 41), new Tile(11, 42), new Tile(11, 43),
+                new Tile(12, 41), new Tile(12, 42), new Tile(12, 43),
+                new Tile(13, 41), new Tile(13, 42), new Tile(13, 43)),
                 c.getEightNeighborsAndSelf());
     }
 

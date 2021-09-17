@@ -5,42 +5,32 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Represents a hexagonal tile as an immutable pair of int values: row index and column index.
+ * Represents a hexagonal tile as a record of two int values: row index and column index.
+ * Provides methods to get the immediate neighbors of a tile, as well as to traverse a path described by
+ * list of directions.
  */
-public class HexTile {
+public record HexTile(int row, int col) {
 
     private static final String[] DIRECTIONS = new String[] { "w", "e", "nw", "ne", "sw", "se" };
 
-    public final int row;
-    public final int col;
-
-    public HexTile(int row, int col) {
-        this.col = col;
-        this.row = row;
-    }
-
-    public static HexTile of(int row, int col) {
-        return new HexTile(row, col);
-    }
-
     public HexTile getNeighbor(String dir) {
         if ("w".equals(dir)) {
-            return HexTile.of(row, col - 1);
+            return new HexTile(row, col - 1);
         } else if ("e".equals(dir)) {
-            return HexTile.of(row, col + 1);
+            return new HexTile(row, col + 1);
         } else if ("nw".equals(dir)) {
-            return HexTile.of(row - 1, col);
+            return new HexTile(row - 1, col);
         } else if ("ne".equals(dir)) {
-            return HexTile.of(row - 1, col + 1);
+            return new HexTile(row - 1, col + 1);
         } else if ("sw".equals(dir)) {
-            return HexTile.of(row + 1, col - 1);
+            return new HexTile(row + 1, col - 1);
         } else if ("se".equals(dir)) {
-            return HexTile.of(row + 1, col);
+            return new HexTile(row + 1, col);
         }
         throw new IllegalArgumentException();
     }
 
-    public HexTile getTile(String path) {
+    public HexTile gotoTile(String path) {
         HexTile current = this;
         for (int i = 0; i < path.length(); i++) {
             if (path.charAt(i) == 'n' || path.charAt(i) == 's') {
@@ -66,25 +56,6 @@ public class HexTile {
             neighbors.add(getNeighbor(dir));
         }
         return neighbors;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        HexTile other = (HexTile) o;
-        return row == other.row && col == other.col;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(row, col);
-    }
-
-    @Override
-    public String toString() {
-        return "(" + row + "," + col + ')';
     }
 
 }

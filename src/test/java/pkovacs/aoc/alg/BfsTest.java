@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import pkovacs.aoc.util.LongPair;
 import pkovacs.aoc.util.Tile;
 
 import static java.util.stream.Collectors.toList;
@@ -23,28 +22,30 @@ public class BfsTest {
         // valid states, and the edges represent state transformations (steps). The graph is not generated
         // explicitly, but the next states are generated on-the-fly during the traversal.
 
-        var result = Bfs.run(LongPair.of(0, 0), state -> {
-            var list = new ArrayList<LongPair>();
-            list.add(LongPair.of(3, state.b)); // 3-liter jug <-- fountain
-            list.add(LongPair.of(state.a, 5)); // 5-liter jug <-- fountain
-            list.add(LongPair.of(0, state.b)); // 3-liter jug --> fountain
-            list.add(LongPair.of(state.a, 0)); // 5-liter jug --> fountain
-            long d1 = Math.min(3 - state.a, state.b);
-            list.add(LongPair.of(state.a + d1, state.b - d1)); // 3-liter jug <-- 5-liter jug
-            long d2 = Math.min(5 - state.b, state.a);
-            list.add(LongPair.of(state.a - d2, state.b + d2)); // 3-liter jug --> 5-liter jug
+        record State(long a, long b) {}
+
+        var result = Bfs.run(new State(0, 0), state -> {
+            var list = new ArrayList<State>();
+            list.add(new State(3, state.b())); // 3-liter jug <-- fountain
+            list.add(new State(state.a(), 5)); // 5-liter jug <-- fountain
+            list.add(new State(0, state.b())); // 3-liter jug --> fountain
+            list.add(new State(state.a(), 0)); // 5-liter jug --> fountain
+            long d1 = Math.min(3 - state.a(), state.b());
+            list.add(new State(state.a() + d1, state.b() - d1)); // 3-liter jug <-- 5-liter jug
+            long d2 = Math.min(5 - state.b(), state.a());
+            list.add(new State(state.a() - d2, state.b() + d2)); // 3-liter jug --> 5-liter jug
             return list;
-        }, pair -> pair.b == 4);
+        }, pair -> pair.b() == 4);
 
         assertTrue(result.isPresent());
         assertEquals(6, result.get().getDist());
-        assertEquals(List.of(LongPair.of(0, 0),
-                LongPair.of(0, 5),
-                LongPair.of(3, 2),
-                LongPair.of(0, 2),
-                LongPair.of(2, 0),
-                LongPair.of(2, 5),
-                LongPair.of(3, 4)),
+        assertEquals(List.of(new State(0, 0),
+                new State(0, 5),
+                new State(3, 2),
+                new State(0, 2),
+                new State(2, 0),
+                new State(2, 5),
+                new State(3, 4)),
                 result.get().getPath());
     }
 
@@ -54,13 +55,13 @@ public class BfsTest {
         // See maze1.txt, '#' represents a wall tile, '.' represents an empty tile.
 
         var maze = Files.readAllLines(Path.of(getClass().getResource("maze1.txt").toURI()));
-        var start = Tile.of(0, 0);
-        var end = Tile.of(9, 11);
+        var start = new Tile(0, 0);
+        var end = new Tile(9, 11);
 
         var result = Bfs.run(start,
                 cell -> cell.getFourNeighbors().stream()
                         .filter(c -> c.isValid(maze.size(), maze.get(0).length()))
-                        .filter(c -> maze.get(c.row).charAt(c.col) == '.')
+                        .filter(c -> maze.get(c.row()).charAt(c.col()) == '.')
                         .collect(toList()),
                 end::equals);
 
