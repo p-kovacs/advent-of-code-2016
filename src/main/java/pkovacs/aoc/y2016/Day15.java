@@ -20,30 +20,31 @@ public class Day15 {
             discs.add(new Disc(parts.get(1).asInt(), parts.get(2).asInt()));
         }
 
-        int solution1 = solve(discs);
+        long solution1 = solve(discs);
 
         discs.add(new Disc(11, 0));
-        int solution2 = solve(discs);
+        long solution2 = solve(discs);
 
         System.out.println("Part 1: " + solution1);
         System.out.println("Part 2: " + solution2);
     }
 
-    private static int solve(List<Disc> discs) {
-        for (int start = 0, step = 1, i = 0; true; start += step) {
-            while (i < discs.size()) {
-                int time = start + i + 1;
-                if ((discs.get(i).startPos() + time) % discs.get(i).posCount == 0) {
-                    step *= discs.get(i).posCount;
-                    i++;
-                } else {
-                    break;
-                }
+    /**
+     * Applies a simple CRT (Chinese remainder theorem) algorithm to find the appriopriate start time:
+     * https://en.wikipedia.org/wiki/Chinese_remainder_theorem#Search_by_sieving
+     */
+    private static long solve(List<Disc> discs) {
+        long startTime = 0;
+        long step = 1;
+        for (int i = 0; i < discs.size(); i++) {
+            // Find the first start time that is appropriate for disc i
+            Disc disc = discs.get(i);
+            while (((disc.startPos() + startTime + i + 1) % disc.posCount) != 0) {
+                startTime += step;
             }
-            if (i == discs.size()) {
-                return start;
-            }
+            step *= disc.posCount; // position counts are primes, so they are obviously pairwise co-primes
         }
+        return startTime;
     }
 
 }
