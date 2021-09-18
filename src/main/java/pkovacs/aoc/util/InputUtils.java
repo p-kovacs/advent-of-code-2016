@@ -20,6 +20,13 @@ public final class InputUtils {
     }
 
     /**
+     * Reads the first line of the given input file.
+     */
+    public static String readLine(String fileName) {
+        return readLines(fileName).get(0);
+    }
+
+    /**
      * Reads all lines of the given input file.
      */
     public static List<String> readLines(String fileName) {

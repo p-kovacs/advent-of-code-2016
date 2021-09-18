@@ -12,7 +12,7 @@ import pkovacs.aoc.util.InputUtils;
 public class Day14 {
 
     public static void main(String[] args) {
-        var salt = InputUtils.readLines("y2016/day14.txt").get(0);
+        var salt = InputUtils.readLine("y2016/day14.txt");
 
         System.out.println("Part 1: " + solve(salt, false));
         System.out.println("Part 2: " + solve(salt, true));
