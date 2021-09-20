@@ -25,7 +25,6 @@ abstract class DayTestBase {
 
     void assertSolution1(String expected) {
         assertSolution(1, expected);
-
     }
 
     void assertSolution2(String expected) {
