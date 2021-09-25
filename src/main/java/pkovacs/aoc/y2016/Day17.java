@@ -13,14 +13,13 @@ import pkovacs.aoc.util.Tile;
 
 public class Day17 {
 
-    private static record State(Tile tile, String path) {
-    }
+    private static record State(Tile tile, String path) {}
 
     private static final char[] DIRS = { 'U', 'D', 'L', 'R' };
 
-    private static int SIZE = 4;
-    private static final Tile START_TILE = new Tile(0,0);
-    private static final Tile TARGET_TILE = new Tile(3,3);
+    private static final int SIZE = 4;
+    private static final Tile START_TILE = new Tile(0, 0);
+    private static final Tile TARGET_TILE = new Tile(3, 3);
 
     public static void main(String[] args) {
         String passCode = InputUtils.readLines("y2016/day17.txt").get(0);

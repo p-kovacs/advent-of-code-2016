@@ -2,7 +2,6 @@ package pkovacs.aoc.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Represents a hexagonal tile as a record of two int values: row index and column index.

@@ -7,8 +7,7 @@ import pkovacs.aoc.util.InputUtils;
 
 public class Day15 {
 
-    private record Disc(int posCount, int startPos) {
-    }
+    private record Disc(int posCount, int startPos) {}
 
     public static void main(String[] args) {
         var lines = InputUtils.readLines("y2016/day15.txt");

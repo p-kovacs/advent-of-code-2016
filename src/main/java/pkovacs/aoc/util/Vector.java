@@ -1,7 +1,5 @@
 package pkovacs.aoc.util;
 
-import java.util.Objects;
-
 /**
  * Represents a 2-dimensional immutable vector with long integer coordinates and Manhattan distance.
  * <p>

@@ -40,12 +40,12 @@ public class BfsTest {
         assertTrue(result.isPresent());
         assertEquals(6, result.get().getDist());
         assertEquals(List.of(new State(0, 0),
-                new State(0, 5),
-                new State(3, 2),
-                new State(0, 2),
-                new State(2, 0),
-                new State(2, 5),
-                new State(3, 4)),
+                        new State(0, 5),
+                        new State(3, 2),
+                        new State(0, 2),
+                        new State(2, 0),
+                        new State(2, 5),
+                        new State(3, 4)),
                 result.get().getPath());
     }
 

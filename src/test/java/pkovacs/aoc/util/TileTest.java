@@ -29,12 +29,12 @@ public class TileTest {
         assertEquals(List.of(new Tile(11, 42), new Tile(12, 41), new Tile(12, 43),
                 new Tile(13, 42)), c.getFourNeighbors());
         assertEquals(List.of(new Tile(11, 41), new Tile(11, 42), new Tile(11, 43),
-                new Tile(12, 41), new Tile(12, 43),
-                new Tile(13, 41), new Tile(13, 42), new Tile(13, 43)),
+                        new Tile(12, 41), new Tile(12, 43),
+                        new Tile(13, 41), new Tile(13, 42), new Tile(13, 43)),
                 c.getEightNeighbors());
         assertEquals(List.of(new Tile(11, 41), new Tile(11, 42), new Tile(11, 43),
-                new Tile(12, 41), new Tile(12, 42), new Tile(12, 43),
-                new Tile(13, 41), new Tile(13, 42), new Tile(13, 43)),
+                        new Tile(12, 41), new Tile(12, 42), new Tile(12, 43),
+                        new Tile(13, 41), new Tile(13, 42), new Tile(13, 43)),
                 c.getEightNeighborsAndSelf());
     }
 
