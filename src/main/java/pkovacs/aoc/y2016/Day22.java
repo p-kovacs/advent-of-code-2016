@@ -65,6 +65,14 @@ public class Day22 {
                             continue;
                         }
                         var newData = newHole.equals(state.data()) ? state.hole() : state.data();
+
+                        // Heuristic to prune search space: once the hole tile becomes adjacent to the data tile
+                        // (i.e. one of its 8 neighbor tiles), they should remain adjacent. There is no reason to
+                        // increase their distance. This heuristic results in ~130 times fewer nodes visited and
+                        // more than 50 times speed-up.
+                        if (alreadyAdjacent && !areAdjacent(newData, newHole)) {
+                            continue;
+                        }
                         nextStates.add(new State(newData, newHole));
                     }
                     return nextStates;
