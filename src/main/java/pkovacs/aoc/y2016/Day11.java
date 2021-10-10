@@ -101,7 +101,7 @@ public class Day11 {
                     .stream()
                     .map(x -> x.split("-")[0])
                     .distinct()
-                    .collect(toList());
+                    .toList();
 
             items = new int[types.size() * 2];
             for (int k = 0; k < FLOOR_COUNT; k++) {

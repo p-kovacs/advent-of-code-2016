@@ -62,7 +62,7 @@ public class BfsTest {
                 cell -> cell.getFourNeighbors().stream()
                         .filter(c -> c.isValid(maze.size(), maze.get(0).length()))
                         .filter(c -> maze.get(c.row()).charAt(c.col()) == '.')
-                        .collect(toList()),
+                        .toList(),
                 end::equals);
 
         assertTrue(result.isPresent());

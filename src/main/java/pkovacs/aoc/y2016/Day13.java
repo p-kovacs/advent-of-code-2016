@@ -19,7 +19,7 @@ public class Day13 {
         var results = Bfs.run(start,
                 tile -> tile.getFourNeighbors().stream()
                         .filter(n -> isNotWall(n, shift))
-                        .collect(Collectors.toList()));
+                        .toList());
 
         System.out.println("Part 1: " + results.get(target).getDist());
         System.out.println("Part 2: " + results.values().stream().filter(res -> res.getDist() <= 50).count());

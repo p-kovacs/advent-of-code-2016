@@ -54,7 +54,7 @@ public class ShortestPathTest {
                 pos -> pos.getFourNeighbors().stream()
                         .filter(p -> p.isValid(maze.size(), maze.get(0).length()))
                         .filter(p -> maze.get(p.row()).charAt(p.col()) == '.')
-                        .collect(toList()),
+                        .toList(),
                 end::equals);
 
         assertTrue(result.isPresent());
@@ -67,7 +67,7 @@ public class ShortestPathTest {
                 pos -> pos.getFourNeighbors().stream()
                         .filter(p -> p.isValid(maze.size(), maze.get(0).length()))
                         .map(p -> Pair.of(p, maze.get(p.row()).charAt(p.col()) == '.' ? 1 : detonationTime))
-                        .collect(toList()),
+                        .toList(),
                 end::equals);
 
         assertTrue(result.isPresent());
