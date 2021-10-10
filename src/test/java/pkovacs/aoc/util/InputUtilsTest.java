@@ -1,5 +1,7 @@
 package pkovacs.aoc.util;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -14,9 +16,9 @@ class InputUtilsTest {
         var blocks = InputUtils.collectLineBlocks(input);
 
         assertEquals(3, blocks.size());
-        assertArrayEquals(new String[] { "a", "b c d", "e" }, blocks.get(0));
-        assertArrayEquals(new String[] { "f g", "h" }, blocks.get(1));
-        assertArrayEquals(new String[] { "i j k" }, blocks.get(2));
+        assertEquals(List.of("a", "b c d", "e"), blocks.get(0));
+        assertEquals(List.of("f g", "h"), blocks.get(1));
+        assertEquals(List.of("i j k"), blocks.get(2));
 
         assertEquals(3, InputUtils.collectLineBlocks(input + "\n").size());
         assertEquals(3, InputUtils.collectLineBlocks(input + "\n\n").size());

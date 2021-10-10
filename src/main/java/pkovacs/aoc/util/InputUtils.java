@@ -20,9 +20,22 @@ public final class InputUtils {
     }
 
     /**
-     * Reads the first line of the given input file.
+     * Reads the given input file into a string. Line separators are converted to UNIX/Mac style (LF = '\n').
      */
-    public static String readLine(String fileName) {
+    public static String readString(String fileName) {
+        try {
+            return Files.readString(getPath(fileName), StandardCharsets.UTF_8)
+                    .replaceAll("\r\n", "\n")
+                    .replaceAll("\r", "\n");
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    /**
+     * Reads a single line of the given input file.
+     */
+    public static String readSingleLine(String fileName) {
         return readLines(fileName).get(0);
     }
 
@@ -42,19 +55,12 @@ public final class InputUtils {
      */
     public static long[] readLongs(String fileName) {
         try {
-            return scanLongs(Files.readString(getPath(fileName)));
+            return Arrays.stream(Files.readString(getPath(fileName)).split("[^\\d]+"))
+                    .filter(s -> !s.isEmpty())
+                    .mapToLong(Long::parseLong).toArray();
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
-    }
-
-    /**
-     * Collects long integer values from the given string.
-     */
-    public static long[] scanLongs(String input) {
-        return Arrays.stream(input.split("[^\\d]+"))
-                .filter(s -> !s.isEmpty())
-                .mapToLong(Long::parseLong).toArray();
     }
 
     /**
@@ -62,40 +68,25 @@ public final class InputUtils {
      */
     public static int[] readInts(String fileName) {
         try {
-            return scanInts(Files.readString(getPath(fileName)));
+            return Arrays.stream(Files.readString(getPath(fileName)).split("[^\\d]+"))
+                    .filter(s -> !s.isEmpty())
+                    .mapToInt(Integer::parseInt).toArray();
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
-    }
-
-    /**
-     * Collects integer values from the given string.
-     */
-    public static int[] scanInts(String input) {
-        return Arrays.stream(input.split("[^\\d]+"))
-                .filter(s -> !s.isEmpty())
-                .mapToInt(Integer::parseInt).toArray();
     }
 
     /**
      * Reads blocks of lines, separated by blank line(s) from the given input file.
      */
-    public static List<String[]> readLineBlocks(String fileName) {
-        try {
-            var str = Files.readString(getPath(fileName), StandardCharsets.UTF_8);
-            return collectLineBlocks(str);
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e);
-        }
+    public static List<List<String>> readLineBlocks(String fileName) {
+        return collectLineBlocks(readString(fileName));
     }
 
-    /**
-     * Collects blocks of lines, separated by blank lines from the given string.
-     */
-    public static List<String[]> collectLineBlocks(String input) {
+    static List<List<String>> collectLineBlocks(String input) {
         return Arrays.stream(input.replaceAll("\r\n", "\n").split("\n\n"))
-                .map(block -> block.split("\n"))
-                .collect(toList());
+                .map(block -> List.of(block.split("\n")))
+                .toList();
     }
 
     /**
