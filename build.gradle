@@ -5,7 +5,7 @@ plugins {
 sourceCompatibility = 17
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -20,7 +20,7 @@ test {
 }
 
 task run(type: JavaExec) {
-    main = getClassName(project.findProperty('day'))
+    mainClass = getClassName(project.findProperty('day'))
     classpath = sourceSets.main.runtimeClasspath
 }
 
