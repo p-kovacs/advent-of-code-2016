@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
-import pkovacs.aoc.alg.Bfs;
+import pkovacs.aoc.util.Bfs;
 import pkovacs.aoc.util.InputUtils;
 
 public class Day11 {

@@ -1,6 +1,6 @@
 package pkovacs.aoc.y2016;
 
-import pkovacs.aoc.alg.Bfs;
+import pkovacs.aoc.util.Bfs;
 import pkovacs.aoc.util.InputUtils;
 import pkovacs.aoc.util.Tile;
 

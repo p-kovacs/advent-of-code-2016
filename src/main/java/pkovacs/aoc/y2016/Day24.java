@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import pkovacs.aoc.alg.Bfs;
+import pkovacs.aoc.util.Bfs;
 import pkovacs.aoc.util.InputUtils;
 import pkovacs.aoc.util.Tile;
 

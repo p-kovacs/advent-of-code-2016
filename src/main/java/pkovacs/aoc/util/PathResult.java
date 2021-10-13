@@ -1,4 +1,4 @@
-package pkovacs.aoc.alg;
+package pkovacs.aoc.util;
 
 import java.util.ArrayList;
 import java.util.Collections;

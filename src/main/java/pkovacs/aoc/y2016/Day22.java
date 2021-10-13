@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import pkovacs.aoc.alg.Bfs;
+import pkovacs.aoc.util.Bfs;
 import pkovacs.aoc.util.InputUtils;
 import pkovacs.aoc.util.Tile;
 

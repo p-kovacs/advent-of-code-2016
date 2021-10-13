@@ -1,4 +1,4 @@
-package pkovacs.aoc.alg;
+package pkovacs.aoc.util;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
@@ -17,8 +17,6 @@ import java.util.function.Predicate;
  * all nodes. In this case, the algorithm terminates when the shortest path is found for at least one target node
  * (more precisely, when all target nodes having minimum distance are found). This way, we can search paths even in a
  * potentially infinite graph of feasible states and steps.
- *
- * @see ShortestPath
  */
 public final class Bfs {
 

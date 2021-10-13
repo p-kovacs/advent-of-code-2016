@@ -6,8 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.google.common.hash.Hashing;
-import pkovacs.aoc.alg.Bfs;
-import pkovacs.aoc.alg.PathResult;
+import pkovacs.aoc.util.Bfs;
+import pkovacs.aoc.util.PathResult;
 import pkovacs.aoc.util.InputUtils;
 import pkovacs.aoc.util.Tile;
 
