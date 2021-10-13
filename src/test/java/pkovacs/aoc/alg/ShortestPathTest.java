@@ -4,8 +4,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
+import pkovacs.aoc.alg.ShortestPath.Edge;
 import pkovacs.aoc.util.Tile;
 
 import static java.util.stream.Collectors.toList;
@@ -63,10 +63,10 @@ public class ShortestPathTest {
 
     private static PathResult<Tile> findPathInMazeSp(List<String> maze, Tile start,
             Tile end, long detonationTime) {
-        var result = ShortestPath.find(start,
+        var result = ShortestPath.run(start,
                 pos -> pos.getFourNeighbors().stream()
                         .filter(p -> p.isValid(maze.size(), maze.get(0).length()))
-                        .map(p -> Pair.of(p, maze.get(p.row()).charAt(p.col()) == '.' ? 1 : detonationTime))
+                        .map(p -> Edge.of(p, maze.get(p.row()).charAt(p.col()) == '.' ? 1 : detonationTime))
                         .toList(),
                 end::equals);
 
