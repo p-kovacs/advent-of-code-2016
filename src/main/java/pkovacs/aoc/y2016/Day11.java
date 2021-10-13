@@ -11,8 +11,6 @@ import java.util.stream.IntStream;
 import pkovacs.aoc.alg.Bfs;
 import pkovacs.aoc.util.InputUtils;
 
-import static java.util.stream.Collectors.toList;
-
 public class Day11 {
 
     private static final int FLOOR_COUNT = 4;
