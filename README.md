@@ -14,3 +14,9 @@ Java 17 (or newer) is required to be specified in `JAVA_HOME`.
 
 For each day, the corresponding input files in `src/main/resources` contain my personal input data.
 You can replace them with your own ones.
+
+## Notes on the puzzles
+
+* More challenging ones: Day 13, Day 15, Day 17, Day 24
+* Really challenging ones: Day 11, Day 19, Day 22
+* Not so challenging, but cumbersome: Day 21
