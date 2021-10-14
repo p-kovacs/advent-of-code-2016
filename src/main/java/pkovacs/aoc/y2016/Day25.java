@@ -14,7 +14,7 @@ public class Day25 {
         int limit = 10; // experimental limit: only the first few numbers are checked
 
         System.out.println("Part 1: " + findInitialValue(code, limit));
-        System.out.println("Part 2: " + 0);
+        System.out.println("Part 2: ");
     }
 
     private static int findInitialValue(List<String> code, int limit) {
