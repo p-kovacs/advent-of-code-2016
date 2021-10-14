@@ -87,15 +87,15 @@ public class Day23 {
             i++;
         }
 
-        return mem.get("a");
+        return mem.getValue("a");
+    }
+
+    private static long getValue(CounterMap<String> mem, String arg) {
+        return isRegister(arg) ? mem.getValue(arg) : Long.parseLong(arg);
     }
 
     private static boolean isRegister(String s) {
         return s.length() == 1 && Character.isLetter(s.charAt(0));
-    }
-
-    private static long getValue(CounterMap<String> mem, String arg) {
-        return isRegister(arg) ? mem.get(arg) : Long.parseLong(arg);
     }
 
 }

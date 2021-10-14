@@ -36,11 +36,15 @@ public class Day12 {
             }
             i++;
         }
-        return mem.get("a");
+        return mem.getValue("a");
     }
 
     private static long getValue(CounterMap<String> mem, String arg) {
-        return Character.isLetter(arg.charAt(0)) ? mem.get(arg) : Long.parseLong(arg);
+        return isRegister(arg) ? mem.getValue(arg) : Long.parseLong(arg);
+    }
+
+    private static boolean isRegister(String s) {
+        return s.length() == 1 && Character.isLetter(s.charAt(0));
     }
 
 }
