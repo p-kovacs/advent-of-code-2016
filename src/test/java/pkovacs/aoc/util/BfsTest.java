@@ -1,4 +1,4 @@
-package pkovacs.aoc.alg;
+package pkovacs.aoc.util;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -52,9 +52,9 @@ public class BfsTest {
     @Test
     public void testMaze() throws Exception {
         // We have to find the shortest path in a maze from the top left tile to the bottom right tile.
-        // See maze1.txt, '#' represents a wall tile, '.' represents an empty tile.
+        // See maze.txt, '#' represents a wall tile, '.' represents an empty tile.
 
-        var maze = Files.readAllLines(Path.of(getClass().getResource("maze1.txt").toURI()));
+        var maze = Files.readAllLines(Path.of(getClass().getResource("maze.txt").toURI()));
         var start = new Tile(0, 0);
         var end = new Tile(9, 11);
 
