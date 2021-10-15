@@ -59,7 +59,7 @@ public class Day22 {
                 state -> {
                     boolean alreadyAdjacent = areAdjacent(state.data(), state.hole());
                     var nextStates = new ArrayList<State>();
-                    for (var newHole : state.hole().getFourNeighbors()) {
+                    for (var newHole : state.hole().neighbors()) {
                         if (!newHole.isValid(rowCount, colCount) || walls.contains(newHole)) {
                             continue;
                         }

@@ -49,19 +49,12 @@ public class Day17 {
         String hash = getMd5Hash(passCode + state.path());
 
         var result = new ArrayList<State>(4);
-        var neighbors = state.tile().getFourNeighbors();
-        for (int i = 0; i < neighbors.size(); i++) {
-            // Exploit the order of neighbors U, L, R, D: the i-th nieghbor corresponds to the j-th character of the hash
-            int j = switch (i) {
-                case 1 -> 2;
-                case 2 -> 3;
-                case 3 -> 1;
-                default -> 0;
-            };
-            boolean doorIsOpen = neighbors.get(i).isValid(SIZE, SIZE)
-                    && hash.charAt(j) >= 'b' && hash.charAt(j) <= 'f';
+        for (int i = 0; i < 4; i++) {
+            var neighbor = state.tile().neighbor(DIRS[i]);
+            boolean doorIsOpen = neighbor.isValid(SIZE, SIZE)
+                    && hash.charAt(i) >= 'b' && hash.charAt(i) <= 'f';
             if (doorIsOpen) {
-                result.add(new State(neighbors.get(i), state.path + DIRS[j]));
+                result.add(new State(neighbor, state.path + DIRS[i]));
             }
         }
 

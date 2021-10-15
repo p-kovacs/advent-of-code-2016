@@ -1,13 +1,12 @@
 package pkovacs.aoc.util;
 
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import pkovacs.aoc.util.Bfs;
-import pkovacs.aoc.util.Tile;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -55,14 +54,15 @@ public class BfsTest {
         // See maze.txt, '#' represents a wall tile, '.' represents an empty tile.
 
         var maze = Files.readAllLines(Path.of(getClass().getResource("maze.txt").toURI()));
+        int rowCount = maze.size();
+        int colCount = maze.get(0).length();
+
         var start = new Tile(0, 0);
-        var end = new Tile(9, 11);
+        var end = new Tile(rowCount - 1, colCount - 1);
 
         var result = Bfs.run(start,
-                cell -> cell.getFourNeighbors().stream()
-                        .filter(c -> c.isValid(maze.size(), maze.get(0).length()))
-                        .filter(c -> maze.get(c.row()).charAt(c.col()) == '.')
-                        .toList(),
+                cell -> cell.validNeighbors(rowCount, colCount,
+                        t -> maze.get(t.row()).charAt(t.col()) == '.'),
                 end::equals);
 
         assertTrue(result.isPresent());

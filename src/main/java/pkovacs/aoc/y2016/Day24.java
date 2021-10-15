@@ -21,8 +21,8 @@ public class Day24 {
         int[][] dist = new int[targetCount][targetCount];
         for (int i = 0; i < targetCount; i++) {
             var startTile = targetTiles.get(i);
-            var result = Bfs.run(startTile, tile -> tile.getFourNeighbors().stream()
-                    .filter(n -> map[n.row()][n.col()] != '#').toList());
+            var result = Bfs.run(startTile,
+                    tile -> tile.neighbors(n -> map[n.row()][n.col()] != '#'));
             for (int j = 0; j < targetCount; j++) {
                 dist[i][j] = (int) result.get(targetTiles.get(j)).getDist();
             }

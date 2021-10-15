@@ -15,17 +15,14 @@ public class Day13 {
         var target = new Tile(39, 31);
 
         var results = Bfs.run(start,
-                tile -> tile.getFourNeighbors().stream()
-                        .filter(n -> isNotWall(n, shift))
-                        .toList());
+                tile -> tile.validNeighbors(MAP_SIZE, MAP_SIZE, n -> isNotWall(n, shift)));
 
         System.out.println("Part 1: " + results.get(target).getDist());
         System.out.println("Part 2: " + results.values().stream().filter(res -> res.getDist() <= 50).count());
     }
 
     private static boolean isNotWall(Tile tile, long shift) {
-        return tile.isValid(MAP_SIZE, MAP_SIZE)
-                && (Long.bitCount(getMagicNumber(tile.col(), tile.row(), shift)) & 1) == 0;
+        return (Long.bitCount(getMagicNumber(tile.col(), tile.row(), shift)) & 1) == 0;
     }
 
     private static long getMagicNumber(long x, long y, long shift) {

@@ -26,16 +26,7 @@ public class Day02 {
         for (String line : lines) {
             for (int i = 0; i < line.length(); i++) {
                 char ch = line.charAt(i);
-                Tile newPos = null;
-                if (ch == 'U') {
-                    newPos = new Tile(pos.row() - 1, pos.col());
-                } else if (ch == 'D') {
-                    newPos = new Tile(pos.row() + 1, pos.col());
-                } else if (ch == 'L') {
-                    newPos = new Tile(pos.row(), pos.col() - 1);
-                } else if (ch == 'R') {
-                    newPos = new Tile(pos.row(), pos.col() + 1);
-                }
+                Tile newPos = pos.neighbor(ch);
                 if (board.containsKey(newPos)) {
                     pos = newPos;
                 }
