@@ -11,6 +11,9 @@ import java.util.List;
  */
 public class Backtracking {
 
+    private Backtracking() {
+    }
+
     /**
      * Runs backtracking algorithm to find all solutions to the specified problem.
      * A solution is an array of {@code n} integers, each of which is between {@code 0} (inclusive) and {@code n}
