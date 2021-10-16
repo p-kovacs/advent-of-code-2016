@@ -1,9 +1,9 @@
 package pkovacs.aoc.y2016;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import pkovacs.aoc.util.Backtracking;
 import pkovacs.aoc.util.Bfs;
 import pkovacs.aoc.util.InputUtils;
 import pkovacs.aoc.util.Tile;
@@ -17,7 +17,7 @@ public class Day24 {
         var targetTiles = findTargetTiles(map);
         int targetCount = targetTiles.size();
 
-        // Find shortest path distances between target tiles
+        // Find shortest-path distances between target tiles
         int[][] dist = new int[targetCount][targetCount];
         for (int i = 0; i < targetCount; i++) {
             var startTile = targetTiles.get(i);
@@ -29,9 +29,10 @@ public class Day24 {
         }
 
         // Find the best routes considering all permutations of the target tiles (brute-force TSP)
+        var permutations = Backtracking.findAll(targetCount - 1, Backtracking::distinct);
         int min1 = Integer.MAX_VALUE;
         int min2 = Integer.MAX_VALUE;
-        for (int[] order : permutations(targetCount - 1)) {
+        for (int[] order : permutations) {
             int length = 0;
             int prev = 0;
             for (int k : order) {
@@ -62,44 +63,6 @@ public class Day24 {
             }
         }
         return tiles;
-    }
-
-    /**
-     * Generates all permutations of the numbers 0, 1, ..., (n - 1) using backtracking.
-     */
-    private static List<int[]> permutations(int n) {
-        List<int[]> result = new ArrayList<>();
-        int[] x = new int[n];
-        Arrays.fill(x, -1);
-        for (int k = 0; k >= 0; ) {
-            // Find next unused number for k-th position
-            do {
-                x[k]++;
-            } while (x[k] < n && !isUnusedNumber(x, k));
-
-            if (x[k] < n) {
-                // Accepted number found: step forward
-                if (k < n - 1) {
-                    k++;
-                } else {
-                    result.add(x.clone());
-                }
-            } else {
-                // No more accepted number: backtrack
-                x[k] = -1;
-                k--;
-            }
-        }
-        return result;
-    }
-
-    private static boolean isUnusedNumber(int[] x, int k) {
-        for (int i = 0; i < k; i++) {
-            if (x[i] == x[k]) {
-                return false;
-            }
-        }
-        return true;
     }
 
 }
