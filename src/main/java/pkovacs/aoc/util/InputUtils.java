@@ -9,8 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static java.util.stream.Collectors.toList;
-
 /**
  * Provides simple utility methods for processing puzzle input files.
  */

@@ -7,8 +7,8 @@ import java.util.List;
 
 import com.google.common.hash.Hashing;
 import pkovacs.aoc.util.Bfs;
-import pkovacs.aoc.util.PathResult;
 import pkovacs.aoc.util.InputUtils;
+import pkovacs.aoc.util.PathResult;
 import pkovacs.aoc.util.Tile;
 
 public class Day17 {
