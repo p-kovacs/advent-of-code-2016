@@ -1,13 +1,13 @@
 package pkovacs.aoc.util;
 
 /**
- * Represents a position vector (or coordinate vector) in 2D space as an immutable pair of {@code long} values:
- * x and y coordinates. Provides methods for vector operations (addition, rotation, etc.) and for obtaining the
- * Manhattan distance between two vectors.
+ * Represents a position vector in 2D space as an immutable pair of {@code long} values: x and y coordinates.
+ * Provides methods for vector operations (addition, rotation, etc.) and for obtaining the Manhattan distance
+ * between two vectors.
  * <p>
  * The coordinates are interpreted as usual in Math: {@code (0,1)} means {@link #NORTH}, {@code (0,-1)} means
  * {@link #SOUTH}, {@code (1,0)} means {@link #EAST}, and {@code (0,1)} means {@link #WEST}. And the {@link #ORIGIN}
- * is  {@code (0,0)}.
+ * is {@code (0,0)}.
  *
  * @see Point
  */
@@ -61,6 +61,13 @@ public record Vector(long x, long y) {
      */
     public Vector neg() {
         return new Vector(-x, -y);
+    }
+
+    /**
+     * Returns a new vector obtained by multiplying this vector by the given scalar factor.
+     */
+    public Vector multiply(long factor) {
+        return new Vector(x * factor, y * factor);
     }
 
     /**

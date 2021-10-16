@@ -8,7 +8,7 @@ public class VectorTest {
 
     @Test
     public void test() {
-        var a = new Vector(0, 0);
+        var a = Vector.ORIGIN;
         var b = new Vector(42, 12);
 
         assertEquals(b, a.add(b));
@@ -36,6 +36,12 @@ public class VectorTest {
         assertEquals(c.length() + d.length(), c.dist(d));
         c = c.neg();
         assertEquals(0, c.dist(d));
+
+        var e = new Vector(42, 12);
+        assertEquals(Vector.ORIGIN, e.multiply(0));
+        assertEquals(e, e.multiply(1));
+        assertEquals(e.add(e), e.multiply(2));
+        assertEquals(e.add(e).add(e).add(e).add(e), e.multiply(5));
 
         assertEquals(Vector.ORIGIN, Vector.ORIGIN.neg());
         assertEquals(Vector.ORIGIN, Vector.ORIGIN.rotateRight());
