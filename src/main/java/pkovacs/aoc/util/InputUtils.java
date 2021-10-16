@@ -18,7 +18,7 @@ public final class InputUtils {
     }
 
     /**
-     * Reads the given input file into a string. Line separators are converted to UNIX/Mac style (LF = '\n').
+     * Reads the given input file into a string. Line separators are converted to UNIX/Mac style (LF).
      */
     public static String readString(String fileName) {
         try {
@@ -82,7 +82,7 @@ public final class InputUtils {
     }
 
     static List<List<String>> collectLineBlocks(String input) {
-        return Arrays.stream(input.replaceAll("\r\n", "\n").split("\n\n"))
+        return Arrays.stream(input.split("\n\n+"))
                 .map(block -> List.of(block.split("\n")))
                 .toList();
     }

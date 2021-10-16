@@ -11,7 +11,7 @@ class InputUtilsTest {
 
     @Test
     public void testCollectLineBlocks() {
-        String input = "a\nb c d\ne\n\nf g\nh\n\ni j k";
+        String input = "a\nb c d\ne\n\n\n\nf g\nh\n\ni j k";
         var blocks = InputUtils.collectLineBlocks(input);
 
         assertEquals(3, blocks.size());
@@ -20,8 +20,7 @@ class InputUtilsTest {
         assertEquals(List.of("i j k"), blocks.get(2));
 
         assertEquals(3, InputUtils.collectLineBlocks(input + "\n").size());
-        assertEquals(3, InputUtils.collectLineBlocks(input + "\n\n").size());
-        assertEquals(4, InputUtils.collectLineBlocks(input + "\n\n\n").size());
+        assertEquals(3, InputUtils.collectLineBlocks(input + "\n\n\n\n").size());
     }
 
     @Test
