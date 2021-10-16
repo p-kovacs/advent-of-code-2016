@@ -13,7 +13,7 @@ public class VectorTest {
 
         assertEquals(b, a.add(b));
 
-        a = a.add(b).sub(2, 2);
+        a = a.add(b).sub(new Vector(2, 2));
         assertEquals(new Vector(40, 10), a);
         assertEquals(new Vector(-40, -10), a.neg());
 
@@ -29,13 +29,20 @@ public class VectorTest {
 
         var c = new Vector(42, 12);
         var d = new Vector(42, 12);
-        assertEquals(0, Vector.getDistance(c, d));
+        assertEquals(0, Vector.dist(c, d));
         d = d.rotateRight();
-        assertEquals(42 + 12 + 30, Vector.getDistance(c, d));
+        assertEquals(42 + 12 + 30, Vector.dist(c, d));
         c = c.rotateLeft();
-        assertEquals(c.length() + d.length(), c.getDistance(d));
+        assertEquals(c.length() + d.length(), c.dist(d));
         c = c.neg();
-        assertEquals(0, c.getDistance(d));
+        assertEquals(0, c.dist(d));
+
+        assertEquals(Vector.ORIGIN, Vector.ORIGIN.neg());
+        assertEquals(Vector.ORIGIN, Vector.ORIGIN.rotateRight());
+        assertEquals(Vector.NORTH, Vector.ORIGIN.add(Vector.NORTH));
+        assertEquals(Vector.SOUTH, Vector.SOUTH.add(Vector.ORIGIN));
+        assertEquals(Vector.EAST, Vector.NORTH.rotateRight());
+        assertEquals(Vector.WEST, Vector.SOUTH.neg().rotateLeft());
     }
 
 }
