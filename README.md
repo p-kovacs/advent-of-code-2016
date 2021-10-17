@@ -1,8 +1,8 @@
 # Advent of Code 2016
 
-Solutions for puzzles of "Advent of Code 2016", written in Java 17.
+Solutions for the puzzles of [Advent of Code 2016](https://adventofcode.com/2016), written in Java.
 
-Visit https://adventofcode.com/2016 for the puzzle descriptions.
+The general utilities and algorithms used in the solutions are also available in a separate repository: https://github.com/p-kovacs/java-utils.
 
 ## How to use
 
@@ -17,6 +17,14 @@ You can replace them with your own ones.
 
 ## Notes on the puzzles
 
-* More challenging ones: Day 13, Day 15, Day 17, Day 24
-* Really challenging ones: Day 11, Day 19, Day 22
-* Not so challenging, but cumbersome: Day 21
+* More challenging ones:
+[Day 13](https://adventofcode.com/2016/day/13),
+[Day 15](https://adventofcode.com/2016/day/15),
+[Day 17](https://adventofcode.com/2016/day/17),
+[Day 24](https://adventofcode.com/2016/day/24)
+* Even more challenging ones:
+[Day 11](https://adventofcode.com/2016/day/11),
+[Day 19](https://adventofcode.com/2016/day/19),
+[Day 22](https://adventofcode.com/2016/day/22)
+* Not so challenging, but cumbersome:
+[Day 21](https://adventofcode.com/2016/day/21)
