@@ -9,7 +9,7 @@ import java.util.List;
  * and each level can be represented by an integer range. Typical examples include the eight queens puzzle and
  * finding permutations of a collection.
  */
-public class Backtracking {
+public final class Backtracking {
 
     private Backtracking() {
     }
