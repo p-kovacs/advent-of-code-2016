@@ -27,4 +27,5 @@ You can replace them with your own ones.
 [Day 19](https://adventofcode.com/2016/day/19),
 [Day 22](https://adventofcode.com/2016/day/22)
 * Not so challenging, but cumbersome:
-[Day 21](https://adventofcode.com/2016/day/21)
+[Day 21](https://adventofcode.com/2016/day/21),
+[Day 23](https://adventofcode.com/2016/day/23)
