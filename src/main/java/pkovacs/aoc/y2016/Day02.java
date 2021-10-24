@@ -1,71 +1,47 @@
 package pkovacs.aoc.y2016;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import pkovacs.aoc.util.InputUtils;
 import pkovacs.aoc.util.Tile;
 
 public class Day02 {
 
+    private static final char[][] KEYPAD1 = new char[][] {
+            "123".toCharArray(),
+            "456".toCharArray(),
+            "789".toCharArray()
+    };
+
+    private static final char[][] KEYPAD2 = new char[][] {
+            "##1##".toCharArray(),
+            "#234#".toCharArray(),
+            "56789".toCharArray(),
+            "#ABC#".toCharArray(),
+            "##D##".toCharArray()
+    };
+
     public static void main(String[] args) {
         var lines = InputUtils.readLines("y2016/day02.txt");
 
-        System.out.println("Part 1: " + solve(initBoard1(), lines));
-        System.out.println("Part 2: " + solve(initBoard2(), lines));
+        System.out.println("Part 1: " + solve(KEYPAD1, new Tile(1, 1), lines));
+        System.out.println("Part 2: " + solve(KEYPAD2, new Tile(2, 0), lines));
     }
 
-    private static String solve(Map<Tile, Character> board, List<String> lines) {
-        Tile pos = board.entrySet().stream()
-                .filter(e -> e.getValue().equals('5'))
-                .findFirst()
-                .get().getKey();
-
+    private static String solve(char[][] keypad, Tile start, List<String> lines) {
+        int size = keypad.length;
+        var pos = start;
         var code = new StringBuilder();
         for (String line : lines) {
-            for (int i = 0; i < line.length(); i++) {
-                char ch = line.charAt(i);
-                Tile newPos = pos.neighbor(ch);
-                if (board.containsKey(newPos)) {
-                    pos = newPos;
+            for (char ch : line.toCharArray()) {
+                Tile next = pos.neighbor(ch);
+                if (next.isValid(size, size) && keypad[next.row()][next.col()] != '#') {
+                    pos = next;
                 }
             }
-            code.append(board.get(pos));
+            code.append(keypad[pos.row()][pos.col()]);
         }
         return code.toString();
-    }
-
-    private static Map<Tile, Character> initBoard1() {
-        var board = new HashMap<Tile, Character>();
-        board.put(new Tile(0, 0), '1');
-        board.put(new Tile(0, 1), '2');
-        board.put(new Tile(0, 2), '3');
-        board.put(new Tile(1, 0), '4');
-        board.put(new Tile(1, 1), '5');
-        board.put(new Tile(1, 2), '6');
-        board.put(new Tile(2, 0), '7');
-        board.put(new Tile(2, 1), '8');
-        board.put(new Tile(2, 2), '9');
-        return board;
-    }
-
-    private static Map<Tile, Character> initBoard2() {
-        Map<Tile, Character> board = new HashMap<>();
-        board.put(new Tile(0, 2), '1');
-        board.put(new Tile(1, 1), '2');
-        board.put(new Tile(1, 2), '3');
-        board.put(new Tile(1, 3), '4');
-        board.put(new Tile(2, 0), '5');
-        board.put(new Tile(2, 1), '6');
-        board.put(new Tile(2, 2), '7');
-        board.put(new Tile(2, 3), '8');
-        board.put(new Tile(2, 4), '9');
-        board.put(new Tile(3, 1), 'A');
-        board.put(new Tile(3, 2), 'B');
-        board.put(new Tile(3, 3), 'C');
-        board.put(new Tile(4, 2), 'D');
-        return board;
     }
 
 }
