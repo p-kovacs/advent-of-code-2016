@@ -30,8 +30,8 @@ public class Day22 {
             map.put(point, storage);
         }
 
-        long width = map.keySet().stream().mapToLong(Point::x).max().getAsLong() + 1;
-        long height = map.keySet().stream().mapToLong(Point::y).max().getAsLong() + 1;
+        long width = map.keySet().stream().mapToLong(Point::x).max().orElseThrow() + 1;
+        long height = map.keySet().stream().mapToLong(Point::y).max().orElseThrow() + 1;
 
         // For part 2, based on the analysis of the data, we can assume that there is only one "hole" (empty storage
         // node), and each feasible step moves data from and adjacent node to the hole. That is, each step moves the
@@ -53,7 +53,8 @@ public class Day22 {
         var holeStart = map.entrySet().stream()
                 .filter(entry -> entry.getValue().used() == 0)
                 .map(Entry::getKey)
-                .findFirst().get();
+                .findFirst()
+                .orElseThrow();
 
         // Start BFS search to find an optimal sequence of steps
         var result = Bfs.run(new State(dataStart, holeStart),
@@ -78,7 +79,7 @@ public class Day22 {
         );
 
         System.out.println("Part 1: " + countViablePairs(map));
-        System.out.println("Part 2: " + result.get().getDist());
+        System.out.println("Part 2: " + result.orElseThrow().getDist());
     }
 
     private static boolean areAdjacent(Point p1, Point p2) {

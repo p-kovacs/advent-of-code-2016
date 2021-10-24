@@ -20,8 +20,6 @@ public class Day21 {
         for (int i = 0; i < commands.size(); i++) {
             String line = reversed ? commands.get(commands.size() - 1 - i) : commands.get(i);
 
-//            System.out.println(toString(s));
-//            System.out.println("> " + line);
             if (line.startsWith("swap position")) {
                 var parts = InputUtils.scan(line, "swap position %d with position %d");
                 swap(s, parts.get(0).asInt(), parts.get(1).asInt(), reversed);

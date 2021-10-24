@@ -21,13 +21,13 @@ public class Day09 {
             }
             if (ch == '(') {
                 var endIndex = str.indexOf(')', i);
-                var marker = str.substring(i + 1, endIndex);
+                var marker = str.substring(i + 1, endIndex).split("x");
 
-                int charCount = Integer.parseInt(marker.split("x")[0]);
-                int repetitionCount = Integer.parseInt(marker.split("x")[1]);
+                int charCount = Integer.parseInt(marker[0]);
+                int count = Integer.parseInt(marker[1]);
                 var toRepeat = str.substring(endIndex + 1, endIndex + charCount + 1);
                 var length = recursive ? getDecompressedLength(toRepeat, true) : toRepeat.length();
-                total += length * repetitionCount;
+                total += length * count;
 
                 i = endIndex + charCount;
             } else {

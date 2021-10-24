@@ -30,12 +30,13 @@ public class Day17 {
         String shortestPath = resultMap.values().stream()
                 .filter(res -> res.getNode().tile().equals(TARGET_TILE))
                 .min(Comparator.comparing(PathResult::getDist))
-                .get().getNode().path();
+                .orElseThrow()
+                .getNode().path();
 
         long lengthOfLongestPath = resultMap.values().stream()
                 .filter(res -> res.getNode().tile().equals(TARGET_TILE))
                 .mapToLong(PathResult::getDist)
-                .max().getAsLong();
+                .max().orElseThrow();
 
         System.out.println("Part 1: " + shortestPath);
         System.out.println("Part 2: " + lengthOfLongestPath);

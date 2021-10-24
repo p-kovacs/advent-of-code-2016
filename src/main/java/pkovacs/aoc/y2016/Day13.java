@@ -6,16 +6,15 @@ import pkovacs.aoc.util.Point;
 
 public class Day13 {
 
-    private static final int MAP_SIZE = 52;
-
     public static void main(String[] args) {
         long shift = Long.parseLong(InputUtils.readSingleLine("y2016/day13.txt"));
 
         var start = new Point(1, 1);
         var target = new Point(31, 39);
+        var mapSize = 52;
 
         var results = Bfs.run(start,
-                point -> point.validNeighbors(MAP_SIZE, MAP_SIZE, p -> isNotWall(p, shift)));
+                point -> point.validNeighbors(mapSize, mapSize, p -> isNotWall(p, shift)));
 
         System.out.println("Part 1: " + results.get(target).getDist());
         System.out.println("Part 2: " + results.values().stream().filter(res -> res.getDist() <= 50).count());

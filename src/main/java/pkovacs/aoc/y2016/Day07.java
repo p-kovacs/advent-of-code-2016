@@ -43,8 +43,6 @@ public class Day07 {
 
     private static boolean isValid2(String str) {
         int bracketLevel = 0;
-        boolean foundOuter = false;
-        boolean foundInner = false;
         for (int i = 0; i < str.length() - 2; i++) {
             char ch1 = str.charAt(i);
             if (ch1 == '[') {

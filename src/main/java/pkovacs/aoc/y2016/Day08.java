@@ -26,8 +26,6 @@ public class Day08 {
             }
         }
 
-        // print(display);
-
         System.out.println("Part 1: " + getPixelCount(display));
         System.out.println("Part 2: " + "ZFHFSFOGPO"); // hard-coded after reading the result of "print"
     }
@@ -40,7 +38,6 @@ public class Day08 {
             }
             display[row][0] = last;
         }
-//        print(display);
     }
 
     private static void shiftCol(char[][] display, int col, int shift) {
@@ -51,7 +48,6 @@ public class Day08 {
             }
             display[0][col] = last;
         }
-//        print(display);
     }
 
     private static void fillRect(char[][] display, int row, int col, char ch) {
@@ -60,7 +56,6 @@ public class Day08 {
                 display[i][j] = ch;
             }
         }
-//        print(display);
     }
 
     private static int getPixelCount(char[][] display) {
@@ -73,13 +68,6 @@ public class Day08 {
             }
         }
         return cnt;
-    }
-
-    private static void print(char[][] display) {
-        for (int i = 0; i < rowCount; i++) {
-            System.out.println(new String(display[i]));
-        }
-        System.out.println();
     }
 
 }
