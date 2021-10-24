@@ -9,7 +9,7 @@ public class Day13 {
     private static final int MAP_SIZE = 52;
 
     public static void main(String[] args) {
-        long shift = InputUtils.readLongs("y2016/day13.txt")[0];
+        long shift = Long.parseLong(InputUtils.readSingleLine("y2016/day13.txt"));
 
         var start = new Point(1, 1);
         var target = new Point(31, 39);

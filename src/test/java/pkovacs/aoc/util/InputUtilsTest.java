@@ -4,23 +4,17 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class InputUtilsTest {
 
     @Test
-    public void testCollectLineBlocks() {
-        String input = "a\nb c d\ne\n\n\n\nf g\nh\n\ni j k";
-        var blocks = InputUtils.collectLineBlocks(input);
-
-        assertEquals(3, blocks.size());
-        assertEquals(List.of("a", "b c d", "e"), blocks.get(0));
-        assertEquals(List.of("f g", "h"), blocks.get(1));
-        assertEquals(List.of("i j k"), blocks.get(2));
-
-        assertEquals(3, InputUtils.collectLineBlocks(input + "\n").size());
-        assertEquals(3, InputUtils.collectLineBlocks(input + "\n\n\n\n").size());
+    public void testParseIntegers() {
+        String input = "I have 5 apples and 12 bananas. -42 is the opposite of 42.";
+        assertArrayEquals(new int[] { 5, 12, -42, 42 }, InputUtils.parseInts(input));
+        assertArrayEquals(new long[] { 5, 12, -42, 42 }, InputUtils.parseLongs(input));
     }
 
     @Test

@@ -7,12 +7,16 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  * Provides simple utility methods for processing puzzle input files.
  */
 public final class InputUtils {
+
+    private static final Pattern decimalPattern = Pattern.compile("-?\\d+");
 
     private InputUtils() {
     }
@@ -49,42 +53,31 @@ public final class InputUtils {
     }
 
     /**
-     * Reads the given input file as an array of long integer values.
+     * Parses all integers from the given string and returns them as an {@code int} array.
+     * All other characters are simply ignored.
+     * <p>
+     * For example, parsing {@code "I have 5 apples and 12 bananas."} will result in {@code {5, 12}}.
      */
-    public static long[] readLongs(String fileName) {
-        try {
-            return Arrays.stream(Files.readString(getPath(fileName)).split("[^\\d]+"))
-                    .filter(s -> !s.isEmpty())
-                    .mapToLong(Long::parseLong).toArray();
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e);
-        }
+    public static int[] parseInts(String input) {
+        return decimalPattern.matcher(input)
+                .results()
+                .map(MatchResult::group)
+                .mapToInt(Integer::parseInt)
+                .toArray();
     }
 
     /**
-     * Reads the given input file as an array of integer values.
+     * Parses all integers from the given string and returns them as a {@code long} array.
+     * All other characters are simply ignored.
+     * <p>
+     * For example, parsing {@code "I have 5 apples and 12 bananas."} will result in {@code {5, 12}}.
      */
-    public static int[] readInts(String fileName) {
-        try {
-            return Arrays.stream(Files.readString(getPath(fileName)).split("[^\\d]+"))
-                    .filter(s -> !s.isEmpty())
-                    .mapToInt(Integer::parseInt).toArray();
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
-
-    /**
-     * Reads blocks of lines, separated by blank line(s) from the given input file.
-     */
-    public static List<List<String>> readLineBlocks(String fileName) {
-        return collectLineBlocks(readString(fileName));
-    }
-
-    static List<List<String>> collectLineBlocks(String input) {
-        return Arrays.stream(input.split("\n\n+"))
-                .map(block -> List.of(block.split("\n")))
-                .toList();
+    public static long[] parseLongs(String input) {
+        return decimalPattern.matcher(input)
+                .results()
+                .map(MatchResult::group)
+                .mapToLong(Long::parseLong)
+                .toArray();
     }
 
     /**
