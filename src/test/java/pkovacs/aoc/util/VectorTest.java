@@ -33,7 +33,7 @@ public class VectorTest {
         d = d.rotateRight();
         assertEquals(42 + 12 + 30, Vector.dist(c, d));
         c = c.rotateLeft();
-        assertEquals(c.length() + d.length(), c.dist(d));
+        assertEquals(c.dist() + d.dist(), c.dist(d));
         c = c.neg();
         assertEquals(0, c.dist(d));
 

@@ -32,8 +32,8 @@ public class Day01 {
             }
         }
 
-        System.out.println("Part 1: " + v.length());
-        System.out.println("Part 2: " + hq.length());
+        System.out.println("Part 1: " + v.dist());
+        System.out.println("Part 2: " + hq.dist());
     }
 
 }

@@ -85,9 +85,9 @@ public record Vector(long x, long y) {
     }
 
     /**
-     * Returns the length of this vector (the Manhattan distance from {@link #ORIGIN}).
+     * Returns the Manhattan distance between this vector and the {@link #ORIGIN}.
      */
-    public long length() {
+    public long dist() {
         return Math.abs(x) + Math.abs(y);
     }
 
@@ -95,14 +95,14 @@ public record Vector(long x, long y) {
      * Returns the Manhattan distance between this vector and the given vector.
      */
     public long dist(Vector v) {
-        return sub(this, v).length();
+        return sub(this, v).dist();
     }
 
     /**
      * Returns the Manhattan distance between the given two vectors.
      */
     public static long dist(Vector a, Vector b) {
-        return sub(a, b).length();
+        return sub(a, b).dist();
     }
 
 }
