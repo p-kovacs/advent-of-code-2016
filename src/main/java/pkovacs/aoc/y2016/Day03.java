@@ -5,34 +5,35 @@ import pkovacs.aoc.util.InputUtils;
 public class Day03 {
 
     public static void main(String[] args) {
-        var ints = InputUtils.parseInts(InputUtils.readString("y2016/day03.txt"));
+        var lines = InputUtils.readLines("y2016/day03.txt");
+
+        int[][] ints = new int[lines.size()][];
+        for (int i = 0; i < lines.size(); i++) {
+            ints[i] = InputUtils.parseInts(lines.get(i));
+        }
 
         int cnt1 = 0;
-        for (int i = 0; i < ints.length; i += 3) {
-            int a = ints[i];
-            int b = ints[i + 1];
-            int c = ints[i + 2];
-            if (a + b > c && a + c > b && b + c > a) {
+        for (int[] x : ints) {
+            if (canBeTriangle(x[0], x[1], x[2])) {
                 cnt1++;
             }
         }
 
         int cnt2 = 0;
-        for (int i = 0; i < ints.length; ) {
-            int a = ints[i];
-            int b = ints[i + 3];
-            int c = ints[i + 6];
-            if (a + b > c && a + c > b && b + c > a) {
-                cnt2++;
-            }
-            i++;
-            if (i % 3 == 0) {
-                i += 6;
+        for (int i = 0; i < ints.length; i += 3) {
+            for (int j = 0; j < 3; j++) {
+                if (canBeTriangle(ints[i][j], ints[i + 1][j], ints[i + 2][j])) {
+                    cnt2++;
+                }
             }
         }
 
         System.out.println("Part 1: " + cnt1);
         System.out.println("Part 2: " + cnt2);
+    }
+
+    private static boolean canBeTriangle(int a, int b, int c) {
+        return a + b > c && a + c > b && b + c > a;
     }
 
 }
