@@ -12,7 +12,7 @@ public class Day19 {
     }
 
     public static int play(int playerCount, boolean advanced) {
-        // Build a double-linked list of the player IDs
+        // Build a doubly linked cyclic list of the player IDs
         int[] next = new int[playerCount];
         int[] prev = new int[playerCount];
         for (int i = 0; i < next.length - 1; i++) {

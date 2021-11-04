@@ -29,7 +29,7 @@ public class Day15 {
     }
 
     /**
-     * Applies a simple CRT (Chinese remainder theorem) algorithm to find the appriopriate start time:
+     * Applies a simple CRT (Chinese remainder theorem) algorithm to find the appropriate start time:
      * https://en.wikipedia.org/wiki/Chinese_remainder_theorem#Search_by_sieving
      */
     private static long solve(List<Disc> discs) {
