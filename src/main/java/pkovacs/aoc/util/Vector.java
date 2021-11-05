@@ -6,7 +6,7 @@ package pkovacs.aoc.util;
  * between two vectors.
  * <p>
  * The coordinates are interpreted as usual in Math: {@code (0,1)} means {@link #NORTH}, {@code (0,-1)} means
- * {@link #SOUTH}, {@code (1,0)} means {@link #EAST}, and {@code (0,1)} means {@link #WEST}. And the {@link #ORIGIN}
+ * {@link #SOUTH}, {@code (1,0)} means {@link #EAST}, and {@code (-1,0)} means {@link #WEST}. And the {@link #ORIGIN}
  * is {@code (0,0)}.
  *
  * @see Point
