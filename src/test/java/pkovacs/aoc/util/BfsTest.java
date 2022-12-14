@@ -3,7 +3,10 @@ package pkovacs.aoc.util;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
@@ -89,6 +92,20 @@ public class BfsTest {
         assertEquals(List.of(0, 1, 2, 3, 6, 7, 14, 15, 30, 31, 62, 63, 126, 127), result2.get().getPath());
         assertEquals(List.of(0, 1, 2, 4, 5, 10, 20, 21, 42), result3.get().getPath());
         assertEquals(List.of(0, 1, 2, 4, 8, 16, 17, 34, 68, 136, 137), result4.get().getPath());
+    }
+
+    @Test
+    void testMultipleTargets() {
+        var nodes = new ArrayList<>(IntStream.range(0, 100).boxed().toList());
+        Collections.shuffle(nodes, new Random(123456789));
+
+        var result = Bfs.run(nodes.get(0),
+                i -> IntStream.rangeClosed(nodes.indexOf(i), nodes.indexOf(i) + 7).mapToObj(nodes::get).toList(),
+                i -> nodes.indexOf(i) >= 42);
+
+        assertTrue(result.isPresent());
+        assertTrue(result.get().isTarget());
+        assertEquals(6, result.get().getDist());
     }
 
 }
