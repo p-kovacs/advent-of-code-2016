@@ -9,7 +9,7 @@ import pkovacs.aoc.util.InputUtils;
 public class Day25 {
 
     public static void main(String[] args) {
-        var code = InputUtils.readLines("y2016/day25.txt");
+        var code = InputUtils.readLines("day25.txt");
 
         int limit = 10; // experimental limit: only the first few numbers are checked
 

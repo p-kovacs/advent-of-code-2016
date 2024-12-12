@@ -19,7 +19,7 @@ public class Day22 {
     private static record State(Point data, Point hole) {}
 
     public static void main(String[] args) {
-        var lines = InputUtils.readLines("y2016/day22.txt");
+        var lines = InputUtils.readLines("day22.txt");
 
         Map<Point, Storage> map = new HashMap<Point, Storage>();
         for (int i = 2; i < lines.size(); i++) {

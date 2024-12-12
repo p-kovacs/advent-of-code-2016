@@ -19,7 +19,7 @@ public class Day11 {
     static int visitedNodeCount = 0;
 
     public static void main(String[] args) {
-        var lines1 = InputUtils.readLines("y2016/day11.txt");
+        var lines1 = InputUtils.readLines("day11.txt");
 
         var lines2 = new ArrayList<>(lines1);
         lines2.set(0, lines2.get(0) + " AND an elerium generator, an elerium-compatible microchip, "

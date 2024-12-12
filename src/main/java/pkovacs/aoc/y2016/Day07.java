@@ -5,7 +5,7 @@ import pkovacs.aoc.util.InputUtils;
 public class Day07 {
 
     public static void main(String[] args) {
-        var lines = InputUtils.readLines("y2016/day07.txt");
+        var lines = InputUtils.readLines("day07.txt");
 
         long validCount1 = lines.stream().filter(Day07::isValid1).count();
         long validCount2 = lines.stream().filter(Day07::isValid2).count();

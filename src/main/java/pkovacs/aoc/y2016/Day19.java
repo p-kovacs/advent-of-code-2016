@@ -5,7 +5,7 @@ import pkovacs.aoc.util.InputUtils;
 public class Day19 {
 
     public static void main(String[] args) {
-        int playerCount = Integer.parseInt(InputUtils.readSingleLine("y2016/day19.txt"));
+        int playerCount = Integer.parseInt(InputUtils.readSingleLine("day19.txt"));
 
         System.out.println("Part 1: " + play2(playerCount, false));
         System.out.println("Part 2: " + play2(playerCount, true));

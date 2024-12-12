@@ -22,7 +22,7 @@ public class Day17 {
     private static final Tile TARGET_TILE = new Tile(3, 3);
 
     public static void main(String[] args) {
-        String passCode = InputUtils.readLines("y2016/day17.txt").get(0);
+        String passCode = InputUtils.readLines("day17.txt").get(0);
 
         var resultMap = Bfs.run(new State(START_TILE, ""),
                 st -> getNextFeasibleStates(st, passCode));
@@ -62,7 +62,7 @@ public class Day17 {
         return result;
     }
 
-    @SuppressWarnings({ "deprecated", "UnstableApiUsage" })
+    @SuppressWarnings("deprecation")
     private static String getMd5Hash(String s) {
         return Hashing.md5().hashString(s, StandardCharsets.UTF_8).toString();
     }

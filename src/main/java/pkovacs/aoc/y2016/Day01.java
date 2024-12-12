@@ -8,7 +8,7 @@ import pkovacs.aoc.util.Vector;
 public class Day01 {
 
     public static void main(String[] args) {
-        var line = InputUtils.readSingleLine("y2016/day01.txt");
+        var line = InputUtils.readSingleLine("day01.txt");
         var commands = line.split(", ");
 
         Vector v = Vector.ORIGIN;

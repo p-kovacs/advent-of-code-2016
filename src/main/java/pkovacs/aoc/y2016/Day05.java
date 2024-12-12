@@ -8,7 +8,7 @@ import pkovacs.aoc.util.InputUtils;
 public class Day05 {
 
     public static void main(String[] args) {
-        var lines = InputUtils.readLines("y2016/day05.txt");
+        var lines = InputUtils.readLines("day05.txt");
         var id = lines.get(0);
 
         int i = 0;
@@ -35,7 +35,7 @@ public class Day05 {
         System.out.println("Part 2: " + new String(pwd2));
     }
 
-    @SuppressWarnings({ "deprecated", "UnstableApiUsage" })
+    @SuppressWarnings("deprecation")
     private static String getMd5Hash(String s) {
         return Hashing.md5().hashString(s, StandardCharsets.UTF_8).toString();
     }

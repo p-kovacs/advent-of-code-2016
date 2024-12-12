@@ -5,11 +5,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 /**
  * Provides simple utility methods for processing puzzle input files.
@@ -96,7 +94,7 @@ public final class InputUtils {
     }
 
     private static Path getPath(String fileName) {
-        return Path.of(InputUtils.class.getResource("../" + fileName).getPath());
+        return Path.of("input", fileName);
     }
 
     /**

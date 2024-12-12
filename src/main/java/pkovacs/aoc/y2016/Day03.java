@@ -5,7 +5,7 @@ import pkovacs.aoc.util.InputUtils;
 public class Day03 {
 
     public static void main(String[] args) {
-        var lines = InputUtils.readLines("y2016/day03.txt");
+        var lines = InputUtils.readLines("day03.txt");
 
         int[][] ints = new int[lines.size()][];
         for (int i = 0; i < lines.size(); i++) {

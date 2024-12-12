@@ -7,7 +7,7 @@ import pkovacs.aoc.util.InputUtils;
 public class Day18 {
 
     public static void main(String[] args) {
-        var input = InputUtils.readSingleLine("y2016/day18.txt");
+        var input = InputUtils.readSingleLine("day18.txt");
 
         System.out.println("Part 1: " + solve(input, 40));
         System.out.println("Part 2: " + solve(input, 400000));
