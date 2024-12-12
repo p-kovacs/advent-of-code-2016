@@ -22,7 +22,7 @@ public class Day02 {
     };
 
     public static void main(String[] args) {
-        var lines = InputUtils.readLines("y2016/day02.txt");
+        var lines = InputUtils.readLines("day02.txt");
 
         System.out.println("Part 1: " + solve(KEYPAD1, new Tile(1, 1), lines));
         System.out.println("Part 2: " + solve(KEYPAD2, new Tile(2, 0), lines));

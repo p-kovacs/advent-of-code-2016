@@ -7,7 +7,7 @@ import pkovacs.aoc.util.Point;
 public class Day13 {
 
     public static void main(String[] args) {
-        long shift = Long.parseLong(InputUtils.readSingleLine("y2016/day13.txt"));
+        long shift = Long.parseLong(InputUtils.readSingleLine("day13.txt"));
 
         var start = new Point(1, 1);
         var target = new Point(31, 39);

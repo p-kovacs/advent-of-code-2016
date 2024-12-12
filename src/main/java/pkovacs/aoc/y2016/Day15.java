@@ -10,7 +10,7 @@ public class Day15 {
     private record Disc(int posCount, int startPos) {}
 
     public static void main(String[] args) {
-        var lines = InputUtils.readLines("y2016/day15.txt");
+        var lines = InputUtils.readLines("day15.txt");
 
         var discs = new ArrayList<Disc>();
         for (String line : lines) {

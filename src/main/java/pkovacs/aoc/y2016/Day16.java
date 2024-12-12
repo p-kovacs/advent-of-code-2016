@@ -9,7 +9,7 @@ import pkovacs.aoc.util.InputUtils;
 public class Day16 {
 
     public static void main(String[] args) {
-        var line = InputUtils.readLines("y2016/day16.txt").get(0);
+        var line = InputUtils.readLines("day16.txt").get(0);
 
         byte[] input = new byte[line.length()];
         for (int i = 0; i < input.length; i++) {

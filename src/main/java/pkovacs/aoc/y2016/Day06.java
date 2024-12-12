@@ -18,7 +18,7 @@ import static java.util.stream.Collectors.joining;
 public class Day06 {
 
     public static void main(String[] args) {
-        var lines = InputUtils.readLines("y2016/day06.txt");
+        var lines = InputUtils.readLines("day06.txt");
 
         System.out.println("Part 1: " + decode2(lines, false));
         System.out.println("Part 2: " + decode2(lines, true));

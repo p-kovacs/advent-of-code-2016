@@ -11,7 +11,7 @@ import pkovacs.aoc.util.InputUtils;
 public class Day10 {
 
     public static void main(String[] args) {
-        var lines = InputUtils.readLines("y2016/day10.txt");
+        var lines = InputUtils.readLines("day10.txt");
 
         ListMultimap<Integer, Long> bots = MultimapBuilder.hashKeys().arrayListValues().build();
         Map<Integer, Long> outputs = new HashMap<>();

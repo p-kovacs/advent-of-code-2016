@@ -11,7 +11,7 @@ import pkovacs.aoc.util.Tile;
 public class Day24 {
 
     public static void main(String[] args) {
-        var map = InputUtils.readCharMatrix("y2016/day24.txt");
+        var map = InputUtils.readCharMatrix("day24.txt");
 
         // Find target tiles
         var targetTiles = findTargetTiles(map);

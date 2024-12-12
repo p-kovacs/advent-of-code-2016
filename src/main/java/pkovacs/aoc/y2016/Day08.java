@@ -8,7 +8,7 @@ public class Day08 {
     private static final int colCount = 50;
 
     public static void main(String[] args) {
-        var lines = InputUtils.readLines("y2016/day08.txt");
+        var lines = InputUtils.readLines("day08.txt");
 
         char[][] display = new char[rowCount][colCount];
         fillRect(display, rowCount, colCount, '.');

@@ -16,7 +16,7 @@ public class Day23 {
             "cpy b a\nmul a d\ncpy 0 c\ncpy 0 d\ncpy 0 d\ncpy 0 d\ncpy 0 d";
 
     public static void main(String[] args) {
-        var code = InputUtils.readString("y2016/day23.txt");
+        var code = InputUtils.readString("day23.txt");
 
         // Hard-coded optimization for multiplication. We assume that exactly the same series of commands are used
         // in each personalized input (it seems to be the case anyway).

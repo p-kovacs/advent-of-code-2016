@@ -8,7 +8,7 @@ import pkovacs.aoc.util.InputUtils;
 public class Day20 {
 
     public static void main(String[] args) {
-        var lines = InputUtils.readLines("y2016/day20.txt");
+        var lines = InputUtils.readLines("day20.txt");
 
         var ranges = lines.stream().map(Range::new).toList();
 

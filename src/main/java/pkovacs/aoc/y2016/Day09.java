@@ -5,7 +5,7 @@ import pkovacs.aoc.util.InputUtils;
 public class Day09 {
 
     public static void main(String[] args) {
-        var lines = InputUtils.readLines("y2016/day09.txt");
+        var lines = InputUtils.readLines("day09.txt");
         var input = lines.get(0);
 
         System.out.println("Part 1: " + getDecompressedLength(input, false));

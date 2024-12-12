@@ -8,7 +8,7 @@ import pkovacs.aoc.util.InputUtils;
 public class Day12 {
 
     public static void main(String[] args) {
-        var lines = InputUtils.readLines("y2016/day12.txt");
+        var lines = InputUtils.readLines("day12.txt");
 
         var mem1 = new CounterMap<String>();
 

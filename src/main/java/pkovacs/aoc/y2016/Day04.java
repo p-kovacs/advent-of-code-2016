@@ -11,7 +11,7 @@ import static java.util.stream.Collectors.joining;
 public class Day04 {
 
     public static void main(String[] args) {
-        var lines = InputUtils.readLines("y2016/day04.txt");
+        var lines = InputUtils.readLines("day04.txt");
 
         long sum = 0;
         long storageId = -1;
