@@ -2,6 +2,7 @@ package com.github.pkovacs.aoc.y2016;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -16,8 +17,6 @@ public class Day11 {
     private static final int FLOOR_COUNT = 4;
     private static final int TARGET_FLOOR = FLOOR_COUNT - 1;
 
-    static int visitedNodeCount = 0;
-
     public static void main(String[] args) {
         var lines1 = InputUtils.readLines("day11.txt");
 
@@ -29,57 +28,42 @@ public class Day11 {
         System.out.println("Part 2: " + solve(lines2));
     }
 
-    private static int solve(List<String> lines) {
-        var startState = new State(lines);
+    private static long solve(List<String> lines) {
+        return Bfs.run(new State(lines), Day11::getNextStates, State::isTerminal).orElseThrow().getDist();
+    }
 
-//        long start = System.currentTimeMillis();
+    private static Collection<State> getNextStates(State st) {
+        var nextStates = new HashSet<State>();
+        for (int offset : new int[] { +1, -1 }) {
+            int newElevatorPos = st.elevator + offset;
+            if (newElevatorPos < 0 || newElevatorPos >= FLOOR_COUNT) {
+                continue;
+            }
 
-        var result = Bfs.run(startState, st -> {
-            visitedNodeCount++;
-
-            var nextStates = new HashSet<State>();
-            for (int offset : new int[] { +1, -1 }) {
-                int newElevatorPos = st.elevator + offset;
-                if (newElevatorPos < 0 || newElevatorPos >= FLOOR_COUNT) {
+            // Bring one or two items
+            int itemCount = st.getItemCount();
+            for (int a = 0; a < itemCount; a++) {
+                if (st.getFloor(a) != st.elevator) {
                     continue;
                 }
+                var nextState1 = st.move(a, newElevatorPos);
+                if (nextState1.isSafe()) {
+                    nextStates.add(nextState1);
+                }
 
-                // Bring one or two items
-                int itemCount = st.getItemCount();
-                for (int a = 0; a < itemCount; a++) {
-                    if (st.getFloor(a) != st.elevator) {
+                for (int b = a + 1; b < itemCount; b++) {
+                    if (st.getFloor(b) != st.elevator) {
                         continue;
                     }
-                    var nextState1 = st.move(a, newElevatorPos);
-                    if (nextState1.isSafe()) {
-                        nextStates.add(nextState1);
-                    }
-
-                    for (int b = a + 1; b < itemCount; b++) {
-                        if (st.getFloor(b) != st.elevator) {
-                            continue;
-                        }
-                        var nextState2 = nextState1.move(b, newElevatorPos);
-                        if (nextState2.isSafe()) {
-                            nextStates.add(nextState2);
-                        }
+                    var nextState2 = nextState1.move(b, newElevatorPos);
+                    if (nextState2.isSafe()) {
+                        nextStates.add(nextState2);
                     }
                 }
             }
+        }
 
-            return nextStates;
-        }, State::isTerminal).get();
-
-//        System.out.println("DIST:      " + result.getDist());
-//        System.out.println("Time (ms): " + (System.currentTimeMillis() - start));
-//        System.out.println(visitedNodeCount);
-//        System.out.println();
-//
-//        for (var st : result.getPath()) {
-//            System.out.println(st);
-//        }
-
-        return (int) result.getDist();
+        return nextStates;
     }
 
     private static class State {
@@ -87,9 +71,9 @@ public class Day11 {
         int elevator;
         final int[] items; // floor ID for items
 
-        State(State st) {
+        State(int elevator, int[] items) {
             this.elevator = elevator;
-            items = st.items.clone();
+            this.items = items;
         }
 
         State(List<String> lines) {
@@ -127,8 +111,7 @@ public class Day11 {
         }
 
         State move(int itemId, int floor) {
-            var state = new State(this);
-            state.elevator = floor;
+            var state = new State(floor, items.clone());
             state.items[itemId] = floor;
             return state;
         }

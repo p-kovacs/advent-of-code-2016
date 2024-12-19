@@ -12,9 +12,10 @@ import java.util.function.Predicate;
  * is {@link Vector}, which supports vector operations (addition, rotation, etc.).
  *
  * @see Tile
- * @see Vector
  */
 public record Point(long x, long y) {
+
+    public static final Point ORIGIN = new Point(0, 0);
 
     /**
      * Returns true if the coordinates of this point are valid with respect to the given width and height
@@ -58,6 +59,13 @@ public record Point(long x, long y) {
      */
     public Collection<Point> validNeighbors(long width, long height, Predicate<Point> predicate) {
         return neighbors(p -> p.isValid(width, height) && predicate.test(p));
+    }
+
+    /**
+     * Returns the Manhattan distance between this point and the origin.
+     */
+    public long dist() {
+        return dist(this, ORIGIN);
     }
 
     /**

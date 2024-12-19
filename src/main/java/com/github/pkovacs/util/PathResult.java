@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Result object for general path search algorithms: {@link Bfs} and {@link ShortestPath}.
+ * Result object for {@link Bfs}.
  */
 public class PathResult<T> {
 
