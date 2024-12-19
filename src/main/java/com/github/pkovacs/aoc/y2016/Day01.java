@@ -3,7 +3,7 @@ package com.github.pkovacs.aoc.y2016;
 import java.util.HashSet;
 
 import com.github.pkovacs.util.InputUtils;
-import com.github.pkovacs.util.Vector;
+import com.github.pkovacs.util.Point;
 
 public class Day01 {
 
@@ -11,28 +11,24 @@ public class Day01 {
         var line = InputUtils.readSingleLine("day01.txt");
         var commands = line.split(", ");
 
-        Vector v = Vector.ORIGIN;
-        Vector dir = Vector.NORTH;
-        Vector hq = null;
+        var p = Point.ORIGIN;
+        var dir = new Point(0, 1);
+        Point hq = null;
 
         var set = new HashSet<>();
-        set.add(v);
+        set.add(p);
         for (String cmd : commands) {
-            if (cmd.charAt(0) == 'R') {
-                dir = dir.rotateRight();
-            } else {
-                dir = dir.rotateLeft();
-            }
+            dir = cmd.charAt(0) == 'R' ? new Point(dir.y(), -dir.x()) : new Point(-dir.y(), dir.x());
             int steps = Integer.parseInt(cmd.substring(1));
             for (int i = 0; i < steps; i++) {
-                v = v.add(dir);
-                if (!set.add(v) && hq == null) {
-                    hq = v;
+                p = new Point(p.x() + dir.x(), p.y() + dir.y());
+                if (!set.add(p) && hq == null) {
+                    hq = p;
                 }
             }
         }
 
-        System.out.println("Part 1: " + v.dist());
+        System.out.println("Part 1: " + p.dist());
         System.out.println("Part 2: " + hq.dist());
     }
 
